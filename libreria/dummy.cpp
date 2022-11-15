@@ -20,7 +20,7 @@ bool verificar_tiempo_10años(Historia_clinica pac_hist)
 			time(*actual);
 			time_t fecha_ultimo;
 			fecha_ultimo = pac_hist.fecha_ultima_cita.Anio * 31540000 + pac_hist.fecha_ultima_cita.mes * 262800 + pac_hist.fecha_ultima_cita.dia * 86400;
-			float década;
+			float decada;
 			decada = difftime(actual, fecha_ultimo) / 31540000;
 			if (decada >= 10)
 			{

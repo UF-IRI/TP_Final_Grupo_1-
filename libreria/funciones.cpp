@@ -249,7 +249,6 @@ medicos_t* cargar_datos_de_un_archivo_a_una_estruct_medicos(string file, medicos
 	fp.close();
 	return vector;
 }
-
 //------------------------------------------------------------------------------------------------------------
 
 

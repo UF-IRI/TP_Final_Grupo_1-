@@ -71,7 +71,44 @@ int main(int argc, char** argv)
 
         }
         j++;
-    } while (pacientes);
+    } 
+    while (pacientes);
+    string aux_dni;
+    int e;//guarda la posicion del paciente
+    cout << "Ingrese el dni del paciente a contactar: ";
+    cin >> aux_dni;
+    if (Comprobacion_dni(aux_dni) == TRUE)
+    {
+        e = Buscar_posicion(aux_dni, aux_h);
+        char aux_cons;//Reprogramar si no
+        cout << "Ingresar s, si el paciente desea repreogramar la consulta, de lo contrario ingrese n: " << endl;
+        cin >> aux_cons;
+        if (aux_cons == 's' || aux_cons == 'S')
+        {
+            fecha aux_f;
+            cout << "Ingrese la fecha de la nueva consulta: " << endl;
+            cout << "DD/MM/AAAA " << endl;
+            cin >> aux_f.dia >> aux_f.mes >> aux_f.anio;
+            aux_h[e].fecha_de_reprogramacion = aux_f;//Le paso la fecha de reprogramacion a la funcion
+            aux_h[e].reprogramacion_fecha = TRUE;//Le paso la fecha en bool
+            char aux_os;
+            cout << "Ingresar s, si el paciente cambio su obra social, de lo contrario ingrese n: " << endl;
+            cin >> aux_os;
+            if (aux_os == 's' || aux_os == 'S')
+            {
+                int codigo;
+                cout << "Ingrese el codigo de la obra social: ";//cambiodeobrasocial   void cambio_os(int codigo, paciente caso)
+                cin >> codigo;
+                cambio_os(codigo, aux_p[e]);
+            }
+            else
+                agregar_un_paciente_al_archivo(aux_h[e]);
+        }
+        else
+            cout << "Formato no aceptado" << endl;
+        
+    }
+
     foobar::Example example{};
     std::cout << "Example.getValue() => " << example.getValue() << std::endl;
     verificar_tiempo_10años()

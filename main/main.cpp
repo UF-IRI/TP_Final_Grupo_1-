@@ -6,13 +6,14 @@
 //#include <ctime>
 
 using namespace std;
+
 int main(int argc, char** argv)
 {
     string* vector = new string[18];
     char coma;
     int estado_paciente;
     fstream fp;
-    fp.is_open("pacientes.csv", ios::in);
+    fp.open("pacientes.csv", ios::in);
     int j = 0;
     if (!fp.is_open())
     {

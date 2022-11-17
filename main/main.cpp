@@ -12,10 +12,14 @@ int main(int argc, char** argv)
     string* vector = new string[18];
     char coma;
     int estado_paciente;
-    fstream fp;
-    fp.open("pacientes.csv", ios::in);
+    fstream Consultas,Contactos,Medicos, ObraSocial, Pacientes;
+    Consultas.open("IRI_Consultas.csv", ios::in);
+    Contactos.open("IRI_Contactos.csv", ios::in);
+    Medicos.open("IRI_Medicos.csv", ios::in);
+    ObraSocial.open("IRI_ObraSocial.csv", ios::in);
+    Pacientes.open("IRI_Pacientes.csv", ios::in);
     int j = 0;
-    if (!fp.is_open())
+    if (!(Consultas.is_open()||Contactos.is_open() || Medicos.is_open() || ObraSocial.is_open() || Pacientes.is_open())
     {
         return;
     }

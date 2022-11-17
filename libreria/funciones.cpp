@@ -146,7 +146,8 @@ pacientes_t* cargar_datos_de_un_archivo_a_una_estruct_pacientes(string file, pac
 		getline(buffer, _dni, delimitador);
 		getline(buffer, _nombre, delimitador);
 		getline(buffer, _apellido, delimitador);
-		getline(buffer, _sexo, delimitador); getline(buffer, _id_os, delimitador);
+		getline(buffer, _sexo, delimitador);
+		getline(buffer, _id_os, delimitador);
 		getline(buffer, _natalicio, delimitador);
 		getline(buffer, _estado, delimitador);
 		getline(buffer, _id_os, delimitador);

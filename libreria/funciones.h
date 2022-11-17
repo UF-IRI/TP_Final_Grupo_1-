@@ -8,7 +8,13 @@ void reprogramacion_fecha(Historia_clinica* array, int N, Fecha nueva, string dn
 int revisar_estado(Historia_clinica paciente);// permite revisar si el paciente ha muerto o está internado// consultar
 void guardar_secretaria(Ultima_consulta datos, contacto contacto_paciente);// añade un elemento de la estructura última consulta al archivo
 bool Comprobacion_dni(string dni);// verifica si el DNI ingresado es válido
-int buscar_posición(string dni, Historia_clinica pac);// devuelve la posición de un paciente en el 
+int buscar_posición(string dni, Historia_clinica pac);// devuelve la posición de un paciente en el
+int cantidad_de_registros(string file);
+consultas_t* cargar_datos_de_un_archivo_a_una_estruct_consulta(string file, consultas_t* vector);
+contactos_t* cargar_datos_de_un_archivo_a_una_estruct_contactos(string file, contactos_t* vector);
+medicos_t* cargar_datos_de_un_archivo_a_una_estruct_medicos(string file, consultas_t* vector);
+obrasocial_t* cargar_datos_de_un_archivo_a_una_estruct_obra_social(string file, consultas_t* vector);
+pacientes_t* cargar_datos_de_un_archivo_a_una_estruct_pacientes(string file, consultas_t* vector);
 struct Consulta
 {
 	string dni_pac;
@@ -75,7 +81,7 @@ typedef struct Obra_Social
 	string nombre_os;
 
 }obra_social;
-/*
+
 struct Contacto
 {
 	string dni_paciente;
@@ -111,10 +117,5 @@ struct Paciente
 	string id_os;
 }; typedef struct Paciente pacientes_t;
 
-int cantidad_de_registros(string file);
-consultas_t* cargar_datos_de_un_archivo_a_una_estruct_consulta(string file, consultas_t* vector);
-contactos_t* cargar_datos_de_un_archivo_a_una_estruct_contactos(string file, contactos_t* vector);
-medicos_t* cargar_datos_de_un_archivo_a_una_estruct_medicos(string file, consultas_t* vector);
-obrasocial_t* cargar_datos_de_un_archivo_a_una_estruct_obra_social(string file, consultas_t* vector);
-pacientes_t* cargar_datos_de_un_archivo_a_una_estruct_pacientes(string file, consultas_t* vector);*/
+
 

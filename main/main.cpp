@@ -9,8 +9,7 @@ using namespace std;
 
 int main(int argc, char** argv)
 {
-    string* vector = new string[18];
-    char coma;
+    
     int estado_paciente;
     fstream Consultas,Contactos,Medicos, ObraSocial, Pacientes;
     Consultas.open("IRI_Consultas.csv", ios::in);
@@ -19,15 +18,38 @@ int main(int argc, char** argv)
     ObraSocial.open("IRI_ObraSocial.csv", ios::in);
     Pacientes.open("IRI_Pacientes.csv", ios::in);
     int j = 0;
+    string* h_cons = new string[5];
+    string* h_cont = new string[5];
+    string* h_med = new string[6];
+    string* h_os = new string[2];
+    string* h_pac = new string[7];
+    char coma;
     if (!(Consultas.is_open()||Contactos.is_open() || Medicos.is_open() || ObraSocial.is_open() || Pacientes.is_open())
     {
         return;
     }
     do {
-        for (int i = 0; i < 18; i++)
+        for (int i = 0; i < 5; i++)
         {
-            paciente >> vector[i] >> coma;
+            Consultas >> h_cons[i] >> coma;
         }
+        for (int i = 0; i < 5; i++)
+        {
+            Contactos >> h_cont[i] >> coma;
+        }
+        for (int i = 0; i < 6; i++)
+        {
+            Medicos >> h_med[i] >> coma;
+        }
+        for (int i = 0; i < 2; i++)
+        {
+            ObraSocial >> h_os[i] >> coma;
+        }
+        for (int i = 0; i < 7; i++)
+        {
+            Pacientes >> h_pac[i] >> coma;
+        }
+        
         Paciente aux_p[j];
         Contacto aux_cp[j];
         Contacto aux_cm[j];

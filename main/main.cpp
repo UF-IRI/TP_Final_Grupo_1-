@@ -52,11 +52,11 @@ int main(int argc, char** argv)
         
         Paciente aux_p[j];
         Contacto aux_cp[j];
-        Contacto aux_cm[j];
         Medico aux_m[j];
         Historia_clinica aux_h[j];
         Ultima_consulta aux_u[j];
         Obra_Social aux_os[j];
+        Consulta aux_cons[j];
         while (Pacientes)
         {
             Pacientes >> aux_p[j].dni >> coma >> aux_p[j].nombre
@@ -69,9 +69,20 @@ int main(int argc, char** argv)
         }// Leo el archivo de obras sociales
         while (Medicos)
         {
-            Medicos >> aux_m[j].matricula >> coma >> aux_m[j].nombre >> coma >> aux_m[j].apellido >> coma >> aux_cm[j].num_telefono >> coma >>
+            Medicos >> aux_m[j].matricula >> coma >> aux_m[j].nombre >> coma >> aux_m[j].apellido >> coma >> aux_m[j].contacto >> coma >>
                 aux_m[j].especialidad >> coma >> aux_m[j].activo;
         }// Leo el archivo de Medicos
+        while (Contactos)
+        {
+            Contactos >> aux_cp[j].dni >> coma >> aux_cp[j].num_telefono >> coma >> aux_cp[j].num_celular >> coma >> aux_cp[j].direccion
+                >> coma >> aux_cp[j].mail;
+        }// Leo el archivo de contactos
+        while (Consultas)
+        {
+            Consultas >> aux_cons[j].dni_pac >> coma >> aux_cons[j].fecha_solicitado >> coma >> aux_cons[j].fecha_turno >>
+                coma >> aux_cons[j].presento >> coma >> aux_cons[j].matricula_med;
+        }// Leo el archivo de consultas
+
             
         if (verificar_tiempo_10años(aux_h) == verdadero)
         {

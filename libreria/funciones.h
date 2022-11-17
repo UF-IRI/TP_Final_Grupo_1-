@@ -14,7 +14,7 @@ struct Consulta
 	string dni_pac;
 	string fecha_solicitado;
 	string fecha_turno;
-	string presento;
+	bool presento;
 	string matricula_med;
 
 }; typedef Consulta consultas_t;
@@ -39,8 +39,9 @@ typedef struct Contacto
 {
 	string dni;
 	string num_telefono;
+	string num_celular
 	string mail;
-
+	string direccion;
 }contacto;
 typedef struct Medico
 {
@@ -48,6 +49,7 @@ typedef struct Medico
 	string apellido;
 	string matricula;
 	string especialidad;
+	string contacto;
 	bool activo;
 }medico;
 typedef struct Historia_clinica

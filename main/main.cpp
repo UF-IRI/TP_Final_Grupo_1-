@@ -24,6 +24,13 @@ int main(int argc, char** argv)
     string* h_os = new string[2];
     string* h_pac = new string[7];
     char coma;
+    Paciente aux_p[j];
+    Contacto aux_cp[j];
+    Medico aux_m[j];
+    Historia_clinica aux_h[j];
+    Ultima_consulta aux_u[j];
+    Obra_Social aux_os[j];
+    Consulta aux_cons[j];
     if (!(Consultas.is_open()||Contactos.is_open() || Medicos.is_open() || ObraSocial.is_open() || Pacientes.is_open())
     {
         return;
@@ -50,13 +57,6 @@ int main(int argc, char** argv)
             Pacientes >> h_pac[i] >> coma;
         }
         
-        Paciente aux_p[j];
-        Contacto aux_cp[j];
-        Medico aux_m[j];
-        Historia_clinica aux_h[j];
-        Ultima_consulta aux_u[j];
-        Obra_Social aux_os[j];
-        Consulta aux_cons[j];
         while (Pacientes)
         {
             Pacientes >> aux_p[j].dni >> coma >> aux_p[j].nombre

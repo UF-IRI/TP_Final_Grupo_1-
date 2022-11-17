@@ -23,6 +23,8 @@ typedef struct Paciente
 	string nombre;
 	string apellido;
 	string dni;
+	char sexo;
+	fecha nacimiento;
 	string obra_social;
 	string ultimo_medico;
 
@@ -45,7 +47,8 @@ typedef struct Medico
 	string nombre;
 	string apellido;
 	string matricula;
-	string dni_medico;
+	string especialidad;
+	bool activo;
 }medico;
 typedef struct Historia_clinica
 {
@@ -56,7 +59,7 @@ typedef struct Historia_clinica
 	bool reprogramacion_fecha; // verdadero: reprogramaron , falso: no reprogramaron
 	string ultimo_medico; // matrícula del último médico que atendió al paciente
 	fecha fecha_de_reprogramacion; // el dia de reprogramación la cita médica
-	int estado; // 0 si está vivo, 1 si está internado, 2 si murió
+	string estado; // 0 si está vivo, 1 si está internado, 2 si murió
 };
 typedef struct Ultima_consulta
 {
@@ -64,6 +67,12 @@ typedef struct Ultima_consulta
 	string dni_medico;
 	fecha ultima_consulta;// igual al valor de fecha_ultima_cita en Historia_Clinica
 }ultima_consulta;
+typedef struct Obra_Social
+{
+	int codigo;
+	string nombre_os;
+
+}obra_social;
 /*
 struct Contacto
 {

@@ -56,19 +56,23 @@ int main(int argc, char** argv)
         Medico aux_m[j];
         Historia_clinica aux_h[j];
         Ultima_consulta aux_u[j];
-        while (paciente)
+        Obra_Social aux_os[j];
+        while (Pacientes)
         {
-            pacientes >> aux_p[j].nombre >> coma >> aux_p[j].
-            apellido >> coma >> aux_p[j].dni >> coma >> aux_p[j].obra_social >> coma >> aux_cp.[j]num_telefo
-            no >> coma >> aux_cp[j].mail >> coma >> aux_m[j].nombre >> coma >> aux_m[j].apellido >> coma >
-            > aux_m[j].matricula >> coma >> aux_cm[j].num_telefono >> coma >> aux_cm[j].mail >> coma >> a
-            ux_h[j].fecha_ultima_cita >> coma >> aux_h[j].cita_concurrida >> coma >> aux_h[j].reprogramaci
-            ón >> coma >> aux_h[j].fecha_de_reprogramacion >> coma >> aux_h[j].estado;
-            aux_cp[j].dni = aux_h[j].dni = aux_u[j].dni_paciente = aux_p[j].dni;
-            aux_p[j].ultimo_medico = aux_m[j].matricula;
-            aux_u[j].dni_medico = aux_m[j].dni;
-            aux_u[j].fecha_ultima_consulta = aux_h[j].fecha_ultima_cita;
-        } // Llenamos las estructuras con los datos del archivo
+            Pacientes >> aux_p[j].dni >> coma >> aux_p[j].nombre
+            >> coma >> aux_p[j].apellido >> coma >> aux_p[j].sexo >> coma >> aux_p[j].nacimiento >> aux_h[j].estado 
+            >> coma >> aux_p[j].obra_social;// Leo y guardo en las estructuras el archivo IRI_Pacientes.csv
+        } 
+        while (ObraSocial) 
+        {
+            ObraSocial >> aux_os[j].codigo >> coma >> aux_os[j].nombre_os;
+        }// Leo el archivo de obras sociales
+        while (Medicos)
+        {
+            Medicos >> aux_m[j].matricula >> coma >> aux_m[j].nombre >> coma >> aux_m[j].apellido >> coma >> aux_cm[j].num_telefono >> coma >>
+                aux_m[j].especialidad >> coma >> aux_m[j].activo;
+        }// Leo el archivo de Medicos
+            
         if (verificar_tiempo_10años(aux_h) == verdadero)
         {
             agregar_un_paciente_al_archivo(aux_p[j]);

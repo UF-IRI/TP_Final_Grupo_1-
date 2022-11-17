@@ -1,8 +1,8 @@
-#include "iri.cpp"
+//#include "iri.cpp"
 #include <cstdlib>
 #include <iostream>
 #include <string>
-#include "Funciones.h"
+#include "funciones.h"
 //#include <ctime>
 
 using namespace std;
@@ -37,11 +37,11 @@ int main(int argc, char** argv)
         while (paciente)
         {
             pacientes >> aux_p[j].nombre >> coma >> aux_p[j].
-                apellido >> coma >> aux_p[j].dni >> coma >> aux_p[j].obra_social >> coma >> aux_cp.[j]num_telefo
-                no >> coma >> aux_cp[j].mail >> coma >> aux_m[j].nombre >> coma >> aux_m[j].apellido >> coma >
+            apellido >> coma >> aux_p[j].dni >> coma >> aux_p[j].obra_social >> coma >> aux_cp.[j]num_telefo
+            no >> coma >> aux_cp[j].mail >> coma >> aux_m[j].nombre >> coma >> aux_m[j].apellido >> coma >
             > aux_m[j].matricula >> coma >> aux_cm[j].num_telefono >> coma >> aux_cm[j].mail >> coma >> a
-                ux_h[j].fecha_ultima_cita >> coma >> aux_h[j].cita_concurrida >> coma >> aux_h[j].reprogramaci
-                ón >> coma >> aux_h[j].fecha_de_reprogramacion >> coma >> aux_h[j].estado;
+            ux_h[j].fecha_ultima_cita >> coma >> aux_h[j].cita_concurrida >> coma >> aux_h[j].reprogramaci
+            ón >> coma >> aux_h[j].fecha_de_reprogramacion >> coma >> aux_h[j].estado;
             aux_cp[j].dni = aux_h[j].dni = aux_u[j].dni_paciente = aux_p[j].dni;
             aux_p[j].ultimo_medico = aux_m[j].matricula;
             aux_u[j].dni_medico = aux_m[j].dni;

@@ -21,9 +21,9 @@ add_subdirectory(${CMAKE_CURRENT_BINARY_DIR}/googletest-src ${CMAKE_CURRENT_BINA
 
 ## >>>>>>>>>>>>>>>
 ## >>>>>>>>>>>>>>>
-add_executable(unit-test main_test.cpp casos_base.cpp)
+add_executable(unit-test main_test.cpp casos_base.cpp )
 ## <<<<<<<<<<<<<<<
 ## <<<<<<<<<<<<<<<
 
-target_link_libraries(unit-test iri libreria gmock_main)
+target_link_libraries(unit-test iri libreria gmock_main )
 gtest_discover_tests(unit-test)

@@ -1,5 +1,6 @@
 #pragma once
 #include<string>
+
 using namespace std;
 
 bool verificar_tiempo_10años(Historia_clinica pac_hist); // verdadero>10 , falso<10

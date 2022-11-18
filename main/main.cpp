@@ -2,6 +2,7 @@
 #include <cstdlib>
 #include <iostream>
 #include <string>
+#include <fstream>
 #include "funciones.h"
 //#include <ctime>
 
@@ -10,8 +11,12 @@ using namespace std;
 int main(int argc, char** argv)
 {
     
-    int estado_paciente;
-    fstream Consultas,Contactos,Medicos, ObraSocial, Pacientes;
+    int estado_paciente = 0;
+    fstream Consultas;
+    fstream Contactos;
+    fstream Medicos;
+    fstream ObraSocial; 
+    fstream Pacientes;
     Consultas.open("IRI_Consultas.csv", ios::in);
     Contactos.open("IRI_Contactos.csv", ios::in);
     Medicos.open("IRI_Medicos.csv", ios::in);
@@ -23,7 +28,7 @@ int main(int argc, char** argv)
     string* h_med = new string[6];
     string* h_os = new string[2];
     string* h_pac = new string[7];
-    char coma;
+    char coma¨ = ',';
     Paciente aux_p[j];
     Contacto aux_cp[j];
     Medico aux_m[j];

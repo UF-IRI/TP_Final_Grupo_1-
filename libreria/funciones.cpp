@@ -346,6 +346,108 @@ int buscar_posición(string dni, Historia_clinica* array)
 			return -1;
 	}
 }
+bool agregar_consulta(consultas_t* lista, int cant, int tamanio, consultas_t cons)
+{
+	consultas_t* aux = nullptr;
+	if (cant < tamanio)
+	{
+		cout << "Hay espacio para cargar";
+		lista[cant] = cons;
+		return true;
+	}
+	else if (cant == tamanio)
+	{
+		lista[tamanio] = cons;
+		return true;
+	}
+	else
+	{
+		return false;//Regresa false por que no se puede agregar a la lista
+	}
+
+}
+
+bool agregar_contactos(contacto* lista, int cant, int tamanio, contacto cons)
+{
+	contacto* aux = nullptr;
+	if (cant < tamanio)
+	{
+		cout << "Hay espacio para cargar";
+		lista[cant] = cons;
+		return true;
+	}
+	else if (cant == tamanio)
+	{
+		lista[tamanio] = cons;
+		return true;
+	}
+	else
+	{
+		return false;//Regresa false por que no se puede agregar a la lista
+	}
+
+}
+
+bool agregar_medico(medico* lista, int cant, int tamanio, medico cons)
+{
+	medico* aux = nullptr;
+	if (cant < tamanio)
+	{
+		cout << "Hay espacio para cargar";
+		lista[cant] = cons;
+		return true;
+	}
+	else if (cant == tamanio)
+	{
+		lista[tamanio] = cons;
+		return true;
+	}
+	else
+	{
+		return false;//Regresa false por que no se puede agregar a la lista
+	}
+}
+
+bool agregar_obra_social(obra_social* lista, int cant, int tamanio, obra_social cons)
+{
+	consultas_t* aux = nullptr;
+	if (cant < tamanio)
+	{
+		cout << "Hay espacio para cargar";
+		lista[cant] = cons;
+		return true;
+	}
+	else if (cant == tamanio)
+	{
+		lista[tamanio] = cons;
+		return true;
+	}
+	else
+	{
+		return false;//Regresa false por que no se puede agregar a la lista
+	}
+}
+
+bool agregar_paciente(paciente lista, int cant, int tamanio, paciente cons)
+{
+	paciente* aux = nullptr;
+	if (cant < tamanio)
+	{
+		cout << "Hay espacio para cargar";
+		lista[cant] = cons;
+		return true;
+	}
+	else if (cant == tamanio)
+	{
+		lista[tamanio] = cons;
+		return true;
+	}
+	else
+	{
+		return false;//Regresa false por que no se puede agregar a la lista
+	}
+
+}
 //------------------------------------------------------------------------------------------------------------
 
 

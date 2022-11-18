@@ -9,12 +9,20 @@ int revisar_estado(Historia_clinica paciente);// permite revisar si el paciente 
 void guardar_secretaria(Ultima_consulta datos, contacto contacto_paciente);// añade un elemento de la estructura última consulta al archivo
 bool Comprobacion_dni(string dni);// verifica si el DNI ingresado es válido
 int buscar_posición(string dni, Historia_clinica pac);// devuelve la posición de un paciente en el
+//-------------------------------------------------------------------------------
 int cantidad_de_registros(string file);
 consultas_t* cargar_datos_de_un_archivo_a_una_estruct_consulta(string file, consultas_t* vector);
 contactos_t* cargar_datos_de_un_archivo_a_una_estruct_contactos(string file, contactos_t* vector);
 medicos_t* cargar_datos_de_un_archivo_a_una_estruct_medicos(string file, consultas_t* vector);
 obrasocial_t* cargar_datos_de_un_archivo_a_una_estruct_obra_social(string file, consultas_t* vector);
 pacientes_t* cargar_datos_de_un_archivo_a_una_estruct_pacientes(string file, consultas_t* vector);
+bool agregar_consulta(consultas_t* lista, int cant, int tamanio, consultas_t cons);
+bool agregar_contactos(contacto* lista, int cant, int tamanio, contacto cons);
+bool agregar_medico(medico* lista, int cant, int tamanio, medico cons);
+bool agregar_obra_social(obra_social* lista, int cant, int tamanio, obra_social cons);
+bool agregar_paciente(paciente lista, int cant, int tamanio, paciente cons);
+
+
 struct Consulta
 {
 	string dni_pac;
@@ -82,40 +90,40 @@ typedef struct Obra_Social
 
 }obra_social;
 
-struct Contacto
-{
-	string dni_paciente;
-	string telefono;
-	string celular; 
-	string direccion;
-	string mail;
-
-}; typedef Contacto contactos_t;
-struct Medico
-{
-	string matricula;
-	string nombre;
-	string apellido;
-	string telefono;
-	string especialidad;
-	string activo;
-}; typedef struct Medico medicos_t;
-
-struct ObraSocial
-{
-	string id_os;
-	string obra_social;
-}; typedef struct ObraSocial obrasocial_t;
-struct Paciente
-{
-	string dni;
-	string nombre;
-	string apellido;
-	string sexo; 
-	string natalicio;
-	string estado;
-	string id_os;
-}; typedef struct Paciente pacientes_t;
+//struct Contacto
+//{
+//	string dni_paciente;
+//	string telefono;
+//	string celular; 
+//	string direccion;
+//	string mail;
+//
+//}; typedef Contacto contactos_t;
+//struct Medico
+//{
+//	string matricula;
+//	string nombre;
+//	string apellido;
+//	string telefono;
+//	string especialidad;
+//	string activo;
+//}; typedef struct Medico medicos_t;
+//
+//struct ObraSocial
+//{
+//	string id_os;
+//	string obra_social;
+//}; typedef struct ObraSocial obrasocial_t;
+//struct Paciente
+//{
+//	string dni;
+//	string nombre;
+//	string apellido;
+//	string sexo; 
+//	string natalicio;
+//	string estado;
+//	string id_os;
+//}; typedef struct Paciente pacientes_t;
 
 
 

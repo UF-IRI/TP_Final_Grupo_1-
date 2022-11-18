@@ -11,18 +11,17 @@ bool Comprobacion_dni(string dni);// verifica si el DNI ingresado es válido
 int buscar_posición(string dni, Historia_clinica pac);// devuelve la posición de un paciente en el
 //-------------------------------------------------------------------------------
 int cantidad_de_registros(string file);
-consultas_t* cargar_datos_de_un_archivo_a_una_estruct_consulta(string file, consultas_t* vector);
-contactos_t* cargar_datos_de_un_archivo_a_una_estruct_contactos(string file, contactos_t* vector);
-medicos_t* cargar_datos_de_un_archivo_a_una_estruct_medicos(string file, consultas_t* vector);
-obrasocial_t* cargar_datos_de_un_archivo_a_una_estruct_obra_social(string file, consultas_t* vector);
-pacientes_t* cargar_datos_de_un_archivo_a_una_estruct_pacientes(string file, consultas_t* vector);
 bool agregar_consulta(consultas_t* lista, int cant, int tamanio, consultas_t cons);
 bool agregar_contactos(contacto* lista, int cant, int tamanio, contacto cons);
 bool agregar_medico(medico* lista, int cant, int tamanio, medico cons);
 bool agregar_obra_social(obra_social* lista, int cant, int tamanio, obra_social cons);
 bool agregar_paciente(paciente lista, int cant, int tamanio, paciente cons);
-
-
+bool resize_consulta(consultas_t* lista, int tamanio);
+bool resize_contactos(contacto* lista, int tamanio);
+bool resize_medico(medico* lista, int tamanio);
+bool resize_obra_social(obra_social* lista, int tamanio);
+bool resiz_paciente(paciente* lista, int tamanio);
+bool eliminar_paciente(paciente* lista, int pos, int cant);
 struct Consulta
 {
 	string dni_pac;
@@ -53,7 +52,7 @@ typedef struct Contacto
 {
 	string dni;
 	string num_telefono;
-	string num_celular
+	string num_celular;
 	string mail;
 	string direccion;
 }contacto;

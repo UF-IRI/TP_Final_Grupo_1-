@@ -1,6 +1,7 @@
 #pragma once
 #include<string>
-
+#include <stdlib>
+#include <fstream>
 using namespace std;
 
 bool verificar_tiempo_10años(Historia_clinica pac_hist); // verdadero>10 , falso<10
@@ -23,6 +24,10 @@ bool resize_medico(medico* lista, int tamanio);
 bool resize_obra_social(obra_social* lista, int tamanio);
 bool resiz_paciente(paciente* lista, int tamanio);
 bool eliminar_paciente(paciente* lista, int pos, int cant);
+bool eliminar_obra_social(obra_social* lista, int pos, int cant);
+bool eliminar_medico(medico* lista, int pos, int cant);
+bool eliminar_contacto(contacto* lista, int pos, int cant);
+bool eliminar_consulta(consulta* lista, int pos, int cant);
 struct Consulta
 {
 	string dni_pac;

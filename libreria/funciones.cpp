@@ -345,6 +345,114 @@ bool eliminar_paciente(paciente* lista, int pos, int cant)
 	return true;
 }
 
+bool eliminar_obra_social(obra_social* lista, int pos, int cant)
+{
+	obra_social* aux;
+	aux = new obra_social[cant - 1];
+	if (lista == nullptr)
+	{
+		return false;
+	}
+	else
+	{
+		for (i = 0; i < cant; i++)
+		{
+			aux[i] = lista[i];
+			if (i == pos)
+			{
+				for (int j = i + 1; j < cant; j++)
+				{
+					aux[j] = lista[j];
+				}
+			}
+		}
+	}
+	lista = aux;
+	delete[]aux;
+	return true;
+}
+
+bool eliminar_medico(medico* lista, int pos, int cant)
+{
+	medico* aux;
+	aux = new medico[cant - 1];
+	if (lista == nullptr)
+	{
+		return false;
+	}
+	else
+	{
+		for (i = 0; i < cant; i++)
+		{
+			aux[i] = lista[i];
+			if (i == pos)
+			{
+				for (int j = i + 1; j < cant; j++)
+				{
+					aux[j] = lista[j];
+				}
+			}
+		}
+	}
+	lista = aux;
+	delete[]aux;
+	return true;
+}
+
+bool eliminar_contacto(contacto* lista, int pos, int cant)
+{
+	contacto* aux;
+	aux = new contacto[cant - 1];
+	if (lista == nullptr)
+	{
+		return false;
+	}
+	else
+	{
+		for (i = 0; i < cant; i++)
+		{
+			aux[i] = lista[i];
+			if (i == pos)
+			{
+				for (int j = i + 1; j < cant; j++)
+				{
+					aux[j] = lista[j];
+				}
+			}
+		}
+	}
+	lista = aux;
+	delete[]aux;
+	return true;
+}
+
+bool eliminar_consulta(consulta* lista, int pos, int cant)
+{
+	consulta* aux;
+	aux = new consulta[cant - 1];
+	if (lista == nullptr)
+	{
+		return false;
+	}
+	else
+	{
+		for (i = 0; i < cant; i++)
+		{
+			aux[i] = lista[i];
+			if (i == pos)
+			{
+				for (int j = i + 1; j < cant; j++)
+				{
+					aux[j] = lista[j];
+				}
+			}
+		}
+	}
+	lista = aux;
+	delete[]aux;
+	return true;
+}
+
 //------------------------------------------------------------------------------------------------------------
 
 

@@ -1,32 +1,395 @@
 #include"funciones.h"
 
+
+Consultas::Consultas()
+{
+	dni_pac = " ";
+	fecha_solicitado = { 0,0,0,0,0,0,0,0,0 };
+	fecha_turno = { 0,0,0,0,0,0,0,0,0 };
+	presento = false;
+	string matricula_med = " ";
+}
+
 int cantidad_de_registros(string file)
 {
-ifstream fp;
-string linea;
-char delimitador = ',';
-int contador = 0;
-fp.open(file, ios::in);
-if (fp.fail())
+	ifstream fp;
+	string linea;
+	char delimitador = ',';
+	int contador = 0;
+	fp.open(file, ios::in);
+	if (fp.fail())
+	{
+		cout << "el archivo no se pudo abrir" << endl;
+		exit(1);
+	}
+	getline(fp, linea);
+	while (getline(fp, linea))
+	{
+		contador++;
+	}
+	return contador;
+}
+//------------------------------------------
+consultas_t* cargar_datos_de_un_archivo_a_una_estruct_consulta(string file, consultas_t* vector)
 {
-	exit(1);
-}
-getline(fp, linea);
-while (getline(fp, linea))
-{
-	contador++;
-}
-return contador;
-}
-//-----------------------------------------------
+	int cant_registros_del_archivo = 0;
+	string linea;
+	int i = 0;
+	char delimitador = ',';
+	cant_registros_del_archivo = cantidad_de_registros(file);
+	vector = new consultas_t[cant_registros_del_archivo];
+	ifstream fp;
+	fp.open("Consultas.csv", ios::in);
+	{
+		cout << " error al abrir el archivo de cosultas " << endl;
+		exit(1);
+	}
+	getline(fp, linea);
+	while (/*!fp.eof()&&i<cant_registros_en_el_archivo*/getline(fp, linea))
+	{
+		stringstream buffer(linea);
+		string _dni;
+		string _fecha_solicitado;
+		string _fecha_turno;
+		string presento;
+		string matricula;
+		getline(buffer, _dni, delimitador);
 
-bool verificar_tiempo_10años(Historia_clinica pac_hist)
+		getline(buffer, _fecha_solicitado, delimitador);
+
+		getline(buffer, _fecha_turno, delimitador);
+
+		getline(buffer, presento, delimitador);
+
+		getline(buffer, matricula, delimitador);
+
+		vector[i].dni_pac = _dni;
+		vector[i].fecha_solicitado.tm_mday = obtener_dia(_fecha_solicitado);
+		vector[i].fecha_solicitado.tm_mon = obtener_mes(_fecha_solicitado);
+		vector[i].fecha_solicitado.tm_year = obtener_anio(_fecha_solicitado);
+		vector[i].fecha_turno.tm_mday = obtener_dia(_fecha_solicitado);
+		vector[i].fecha_turno.tm_mon = obtener_mes(_fecha_solicitado);
+		vector[i].fecha_turno.tm_year = obtener_anio(_fecha_solicitado);
+		vector[i].presento = obtener_presento(presento);
+		vector[i].matricula_med = matricula;
+		i++;
+	}
+	for (int i = 0; i < cant_registros_del_archivo; i++)
+	{
+		cout << vector[i].dni_pac << delimitador << vector[i].fecha_solicitado.tm_mday << vector[i].fecha_solicitado.tm_mon << vector[i].fecha_solicitado.tm_year << delimitador << vector[i].presento << vector[i].matricula_med << endl;
+	}
+	fp.close();
+	return vector;
+}
+contactos_t* cargar_datos_de_un_archivo_a_una_estruct_contactos(string file, contactos_t* vector)
+{
+	int cant_registros_del_archivo = 0;
+	string linea;
+	int i = 0;
+	char delimitador = ',';
+	cant_registros_del_archivo = cantidad_de_registros(file);
+	vector = new contactos_t[cant_registros_del_archivo];
+	ifstream fp;
+	fp.open("Contactos.csv", ios::in);
+	{
+		cout << "sante se la come " << endl;
+		exit(1);
+	}
+	getline(fp, linea);
+
+	while (getline(fp, linea))
+	{
+		stringstream buffer(linea);
+		string _dni_paciente;
+		string _telefono;
+		string _celular;
+		string _direccion;
+		string _mail;
+
+		getline(buffer, _dni_paciente, delimitador);
+
+		getline(buffer, _telefono, delimitador);
+
+		getline(buffer, _celular, delimitador);
+
+		getline(buffer, _direccion, delimitador);
+
+		getline(buffer, _mail, delimitador);
+
+		vector[i].dni_paciente = _dni_paciente;
+		vector[i].telefono = _telefono;
+		vector[i].celular = _celular;
+		vector[i].direccion = _direccion;
+		vector[i].mail = _mail;
+		i++;
+	}
+	fp.close();
+	return vector;
+}
+//------------------------------------------------------------
+medicos_t* cargar_datos_de_un_archivo_a_una_estruct_medicos(string file, medicos_t* vector)
+{
+	int cant_registros_del_archivo = 0;
+	string linea;
+	int i = 0;
+	char delimitador = ',';
+	cant_registros_del_archivo = cantidad_de_registros(file);
+	vector = new medicos_t[cant_registros_del_archivo];
+	ifstream fp;
+	fp.open("Medicos.csv", ios::in);
+	{
+		cout << "sante se la come " << endl;
+		exit(1);
+	}
+	getline(fp, linea);
+
+	while (getline(fp, linea))
+	{
+		stringstream buffer(linea);
+
+		string _matricula;
+		string _nombre;
+		string _apellido;
+		string _telefono;
+		string _especialidad;
+		string _activo;
+
+		getline(buffer, _matricula, delimitador);
+
+		getline(buffer, _nombre, delimitador);
+
+		getline(buffer, _apellido, delimitador);
+
+		getline(buffer, _telefono, delimitador);
+
+		getline(buffer, _especialidad, delimitador);
+
+		getline(buffer, _activo, delimitador);
+
+		vector[i].matricula = _matricula;
+		vector[i].nombre = _nombre;
+		vector[i].apellido = _apellido;
+		vector[i].telefono = _telefono;
+		vector[i].especialidad = _especialidad;
+		vector[i].activo = obtener_presento(_activo);
+		i++;
+	}
+	fp.close();
+	return vector;
+}
+//-------------------------------------------
+pacientes_t* cargar_datos_de_un_archivo_a_una_estruct_pacientes(string file, pacientes_t* vector)
+{
+	int aux_estado = 3;
+	int cant_registros_del_archivo = 0;
+	string linea;
+	int i = 0;
+	char delimitador = ',';
+	cant_registros_del_archivo = cantidad_de_registros(file);
+	vector = new pacientes_t[cant_registros_del_archivo];
+	ifstream fp;
+	fp.open("Pacientes.csv", ios::in);
+	{
+		cout << "sante se la come " << endl;
+		exit(1);
+	}
+	getline(fp, linea);
+
+	while (getline(fp, linea))
+	{
+		stringstream buffer(linea);
+
+		string _dni;
+		string _nombre;
+		string _apellido;
+		string _sexo;
+		string _natalicio;
+		string _estado;
+		string _obra_social;
+
+		getline(buffer, _dni, delimitador);
+
+		getline(buffer, _nombre, delimitador);
+
+		getline(buffer, _apellido, delimitador);
+
+		getline(buffer, _sexo, delimitador);
+
+		getline(buffer, _natalicio, delimitador);
+
+		getline(buffer, _estado, delimitador);
+
+		getline(buffer, _obra_social, delimitador);
+
+
+
+		vector[i].dni = _dni;
+		vector[i].nombre = _nombre;
+		vector[i].apellido = _apellido;
+		vector[i].sexo = _sexo;
+		vector[i].natalicio.tm_mday = obtener_dia(_natalicio);
+		vector[i].natalicio.tm_mon = obtener_mes(_natalicio);
+		vector[i].natalicio.tm_year = obtener_anio(_natalicio);
+		aux_estado = obtener_estado_como_numero(_estado);
+		switch (aux_estado)
+		{
+		case 0:
+			vector[i].estado = ESTADO::fallecido;
+			break;
+		case 1:
+			vector[i].estado = ESTADO::internado;
+			break;
+		case 2:
+			vector[i].estado = ESTADO::n_c;
+			break;
+		case 3:
+			vector[i].estado = ESTADO::niguno;
+			cout << "el estado ingresado es incorrecto." << endl;
+			break;
+		}
+		vector[i].obra_social = _obra_social;
+		i++;
+	}
+	fp.close();
+	return vector;
+}
+
+
+Medicos::Medicos()
+{
+	matricula = " ";
+	nombre = " ";
+	apellido = " ";
+	telefono = " ";
+	especialidad = " ";
+	activo = false;
+}
+
+Contactos::Contactos()
+{
+	dni_paciente = " ";
+	telefono = " ";
+	celular = " ";
+	direccion = " ";
+	mail = " ";
+}
+
+Pacientes::Pacientes()
+{
+	string dni = " ";
+	string nombre = " ";
+	string apellido = " ";
+	sexo = '0';
+	natalicio = { 0,0,0,0,0,0,0,0,0 };
+	estado = ESTADO::niguno;
+	obra_social = " ";
+}
+int obtener_dia(string cadena)
+{
+	int dia = 0;
+	int i = 0;
+	string aux = "";
+	do
+	{
+		if (cadena[i] != ' ') //    47/45//5
+		{
+			aux = aux + cadena[i];
+		}
+		i++;
+	} while (cadena[i] != '/');
+	//cout << aux << endl;
+	dia = stoi(aux);
+	return dia;
+}
+//--------------------------------------------------
+int obtener_mes(string cadena)
+{
+	int mes = 0;
+	int centinela = 0;
+	int i = 0;
+	string aux = "";
+	do
+	{
+		if (cadena[i] == '/') ///   7/5/78
+		{
+			centinela++;
+			i++;
+		}
+
+		if (centinela == 1)
+		{
+			aux = aux + cadena[i];
+		}
+		i++;
+	} while (centinela < 2);
+	mes = stoi(aux);
+	return mes;
+}
+//-------------------------------------------
+int obtener_anio(string cadena)
+{
+	int anio = 0;
+	int centinela = 0;
+	int i = 0;
+	string aux = "";
+	do
+	{
+		if (cadena[i] == '/') ///   7/5/78
+		{
+			centinela++;
+			i++;
+		}
+
+		if (centinela == 2)
+		{
+			aux = aux + cadena[i];
+		}
+		i++;
+	} while (cadena[i] != '\0');
+	anio = stoi(aux);
+	return anio;
+}
+
+bool obtener_presento(string cadena)
+{
+	if (cadena[0] == '0')
+	{
+		return false;
+	}
+	else
+	{
+		return true;
+	}
+}
+
+int obtener_estado_como_numero(string estado_paciente)
+{
+	if (estado_paciente == "fallecido")
+	{
+		return 0;
+	}
+	else if (estado_paciente == "internado")
+	{
+		return 1;
+	}
+	else if (estado_paciente == "n_c")
+	{
+		return 2;
+	}
+	else
+	{
+		return 3;
+	}
+	return 4;
+}
+//--------------------------------------------
+bool verificar_tiempo_10anios(string  _dni_paciente)
 {
 	fstream fp;
-	Paciente aux2;
-	Historia_clinica aux;
-	Contacto aux3;
-	char coma;
+	//Paciente aux2;
+	historia_clinica_t aux;
+	//Contacto aux3;
+	char coma = ',';
 	fp.open("Historia_clinica.csv", ios::in);
 	if (!fp.is_open())
 	{
@@ -35,14 +398,19 @@ bool verificar_tiempo_10años(Historia_clinica pac_hist)
 	}
 	while (fp)
 	{
-		fp >> aux2.nombre >> coma >> aux2.apellido >> coma >> aux.aux.dni_paciente >> coma >> aux2.obra_social >> coma >> aux.fecha_ultima_cita.dia >> coma >> aux.fecha_ultima_cita.mes >> coma >> aux.fecha_ultima_cita.anio >> coma >> aux.cita_concurrida >> coma;
-		if (aux.dni_paciente == pac_hist.dni_paciente)
+		fp >> aux.dni_paciente >> coma >> aux.fecha_ultima_cita.tm_mday >> coma
+			>> aux.fecha_ultima_cita.tm_mon >> aux.fecha_ultima_cita.tm_year >> coma >>
+			aux.cita_concurrida >> coma >> aux.reprogramacion_fecha >> coma >>
+			aux.ultimo_medico >> coma >> aux.fecha_de_reprogramacion.tm_mday >> coma >>
+			aux.fecha_de_reprogramacion.tm_mon >> aux.fecha_de_reprogramacion.tm_year >> aux.estado;
+
+		if (aux.dni_paciente == _dni_paciente)
 		{
 			time_t actual;
 			time(*actual);
 			time_t fecha_ultimo;
 			fecha_ultimo = pac_hist.fecha_ultima_cita.Anio * 31540000 + pac_hist.fecha_ultima_cita.mes * 262800 + pac_hist.fecha_ultima_cita.dia * 86400;
-			float década;
+			float decada;
 			decada = difftime(actual, fecha_ultimo) / 31540000;
 			if (decada >= 10)
 			{
@@ -55,404 +423,4 @@ bool verificar_tiempo_10años(Historia_clinica pac_hist)
 	fp.close();
 
 }
-void agregar_un_paciente_al_archivo(Historia_clinica paciente) //agrega un paciente al archivo de irrecuperables
-{
-	fstream fp;
-	fp.open("irrecuperables.txt", ios::app);
-	if (!fp.is_open())
-	{
-		exit(1);
-	}
-	getline(cin, paciente.dni_paciente);
-	fp << paciente.dni_paciente << endl;
-	fp.close();
-}
-void reprogramacion_fecha(Historia_clinica* array, int N, Fecha nueva, string dni)
-{
-	for (int i = 0; i < N; i++)
-	{
-		if (array[i].dni_paciente == dni)
-		{
-			array[i].fecha_de_reprogramacion.dia = nueva.dia;
-			array[i].fecha_de_reprogramacion.mes = nueva.mes;
-			array[i].fecha_de_reprogramacion.anio = nueva.anio;
-		}
-
-	}
-}
-int revisar_estado(Historia_clinica paciente)// Devuelve el estado del paciente
-{
-	return paciente.estado;//0, 1 y 2 estados del paciente ya cargados en el archivo
-}
-void guardar_secretaria(Ultima_consulta datos, contacto contacto_paciente)
-{
-	fstream fp;
-	fp.open("secretaria.txt", ios::app);
-	if (!fp.is_open())
-	{
-		exit(1);
-	}
-	getline(cin, datos.dni_paciente);
-	fp << datos.dni_paciente << " , " << datos.dni_medico << " , " << datos.ultima_consulta << " , " << contacto_paciente.mail << " , " << contacto_paciente.num_telefono << endl;
-	fp.close();
-}
-bool Comprobacion_dni(string& dni)
-{
-	char* p;
-	strtol(str.c_str(), &p, 10);
-	return * p  == 0;// Devuelve 1 si son numeros y 0 si hay una letra
-
-}
-int buscar_posición(string dni, Historia_clinica* array)
-{
-	int longitud = sizeof(array) / sizeof(array[0]);
-	for (int i = 0; i <= longitud; i++)
-	{
-		if (dni == array[i].dni_paciente)
-		{
-			return i;
-		}
-		else
-			return -1;
-	}
-}
-bool agregar_consulta(consultas_t* lista, int cant, int tamanio, consultas_t cons)
-{
-	consultas_t* aux = nullptr;
-	if (cant < tamanio)
-	{
-		cout << "Hay espacio para cargar";
-		lista[cant] = cons;
-		return true;
-	}
-	else if (cant == tamanio)
-	{
-		lista[tamanio] = cons;
-		return true;
-	}
-	else
-	{
-		return false;//Regresa false por que no se puede agregar a la lista
-	}
-
-}
-
-bool agregar_contactos(contacto* lista, int cant, int tamanio, contacto cons)
-{
-	contacto* aux = nullptr;
-	if (cant < tamanio)
-	{
-		cout << "Hay espacio para cargar";
-		lista[cant] = cons;
-		return true;
-	}
-	else if (cant == tamanio)
-	{
-		lista[tamanio] = cons;
-		return true;
-	}
-	else
-	{
-		return false;//Regresa false por que no se puede agregar a la lista
-	}
-
-}
-
-bool agregar_medico(medico* lista, int cant, int tamanio, medico cons)
-{
-	medico* aux = nullptr;
-	if (cant < tamanio)
-	{
-		cout << "Hay espacio para cargar";
-		lista[cant] = cons;
-		return true;
-	}
-	else if (cant == tamanio)
-	{
-		lista[tamanio] = cons;
-		return true;
-	}
-	else
-	{
-		return false;//Regresa false por que no se puede agregar a la lista
-	}
-}
-
-bool agregar_obra_social(obra_social* lista, int cant, int tamanio, obra_social cons)
-{
-	consultas_t* aux = nullptr;
-	if (cant < tamanio)
-	{
-		cout << "Hay espacio para cargar";
-		lista[cant] = cons;
-		return true;
-	}
-	else if (cant == tamanio)
-	{
-		lista[tamanio] = cons;
-		return true;
-	}
-	else
-	{
-		return false;//Regresa false por que no se puede agregar a la lista
-	}
-}
-
-bool agregar_paciente(paciente lista, int cant, int tamanio, paciente cons)
-{
-	paciente* aux = nullptr;
-	if (cant < tamanio)
-	{
-		cout << "Hay espacio para cargar";
-		lista[cant] = cons;
-		return true;
-	}
-	else if (cant == tamanio)
-	{
-		lista[tamanio] = cons;
-		return true;
-	}
-	else
-	{
-		return false;//Regresa false por que no se puede agregar a la lista
-	}
-
-}
-bool resize_consulta(consultas_t* lista, int tamanio)
-{
-	consultas_t* aux = NULL;
-	aux = new consultas_t[tamanio + 20];
-	for (int i = 0; i < tamanio + 20; i++)
-	{
-		aux[i].dni_pac = " ";
-		aux[i].fecha_solicitado = " ";
-		aux[i].fecha_turno = " ";
-		aux[i].presento = false;
-		aux[i].matricula_med = " ";
-
-	}
-	for (int i = 0; i < tamanio; i++)
-	{
-		aux[i] = lista[i];
-	}
-	lista = aux;
-	delete[] aux;
-}
-bool resize_contactos(contacto* lista, int tamanio)
-{
-	contacto* aux = NULL;
-	aux = new contacto[tamanio + 20];
-	for (int i = 0; i < tamanio + 20; i++)
-	{
-		aux[i].direccion = " ";
-		aux[i].dni = " ";
-		aux[i].num_telefono = " ";
-		aux[i].mail = " ";
-		aux[i].num_celular = " ";
-
-	}
-	for (int i = 0; i < tamanio; i++)
-	{
-		aux[i] = lista[i];
-	}
-	lista = aux;
-	delete[] aux;
-}
-bool resize_medico(medico* lista, int tamanio)
-{
-	medico* aux = NULL;
-	aux = new medico[tamanio + 20];
-	for (int i = 0; i < tamanio + 20; i++)
-	{
-		aux[i].nombre = " ";
-		aux[i].apellido = " ";
-		aux[i].matricula = " ";
-		aux[i].especialidad =" ";
-		aux[i].contacto = " ";
-		aux[i].activo= false;
-
-	}
-	for (int i = 0; i < tamanio; i++)
-	{
-		aux[i] = lista[i];
-	}
-	lista = aux;
-	delete[] aux;
-}
-bool resize_obra_social(obra_social* lista, int tamanio)
-{
-	obra_social* aux = NULL;
-	aux = new obra_social[tamanio + 20];
-	for (int i = 0; i < tamanio + 20; i++)
-	{
-		aux[i].codigo = " ";
-		aux[i].nombre_os = " ";
-	}
-	for (int i = 0; i < tamanio; i++)
-	{
-		aux[i] = lista[i];
-	}
-	lista = aux;
-	delete[] aux;
-}
-bool resiz_paciente(paciente* lista, int tamanio)
-{
-	paciente* aux = NULL;
-	aux = new paciente[tamanio + 20];
-	for (int i = 0; i < tamanio + 20; i++)
-	{
-		aux[i].apellido = " ";
-		aux[i].dni = " ";
-		aux[i].nacimiento = " ";
-		aux[i].nombre = " ";
-		aux[i].obra_social = " ";
-		aux[i].sexo = " ";
-		aux[i].ultimo_medico = " ";
-	
-
-	}
-	for (int i = 0; i < tamanio; i++)
-	{
-		aux[i] = lista[i];
-	}
-	lista = aux;
-	delete[] aux;
-}
-bool eliminar_paciente(paciente* lista, int pos, int cant)
-{
-	paciente* aux;
-	aux = new paciente[cant - 1];
-	if (lista == nullptr)
-	{
-		return false;
-    }
-	else 
-	{
-		for (i = 0; i < cant; i++)
-		{
-			aux[i] = lista[i];
-			if (i == pos)
-			{
-				for (int j = i + 1; j < cant; j++)
-				{
-					aux[j] = lista[j];
-				}
-			}
-		}
-	}
-	lista = aux;
-	delete[]aux;
-	return true;
-}
-
-bool eliminar_obra_social(obra_social* lista, int pos, int cant)
-{
-	obra_social* aux;
-	aux = new obra_social[cant - 1];
-	if (lista == nullptr)
-	{
-		return false;
-	}
-	else
-	{
-		for (i = 0; i < cant; i++)
-		{
-			aux[i] = lista[i];
-			if (i == pos)
-			{
-				for (int j = i + 1; j < cant; j++)
-				{
-					aux[j] = lista[j];
-				}
-			}
-		}
-	}
-	lista = aux;
-	delete[]aux;
-	return true;
-}
-
-bool eliminar_medico(medico* lista, int pos, int cant)
-{
-	medico* aux;
-	aux = new medico[cant - 1];
-	if (lista == nullptr)
-	{
-		return false;
-	}
-	else
-	{
-		for (i = 0; i < cant; i++)
-		{
-			aux[i] = lista[i];
-			if (i == pos)
-			{
-				for (int j = i + 1; j < cant; j++)
-				{
-					aux[j] = lista[j];
-				}
-			}
-		}
-	}
-	lista = aux;
-	delete[]aux;
-	return true;
-}
-
-bool eliminar_contacto(contacto* lista, int pos, int cant)
-{
-	contacto* aux;
-	aux = new contacto[cant - 1];
-	if (lista == nullptr)
-	{
-		return false;
-	}
-	else
-	{
-		for (i = 0; i < cant; i++)
-		{
-			aux[i] = lista[i];
-			if (i == pos)
-			{
-				for (int j = i + 1; j < cant; j++)
-				{
-					aux[j] = lista[j];
-				}
-			}
-		}
-	}
-	lista = aux;
-	delete[]aux;
-	return true;
-}
-
-bool eliminar_consulta(consulta* lista, int pos, int cant)
-{
-	consulta* aux;
-	aux = new consulta[cant - 1];
-	if (lista == nullptr)
-	{
-		return false;
-	}
-	else
-	{
-		for (i = 0; i < cant; i++)
-		{
-			aux[i] = lista[i];
-			if (i == pos)
-			{
-				for (int j = i + 1; j < cant; j++)
-				{
-					aux[j] = lista[j];
-				}
-			}
-		}
-	}
-	lista = aux;
-	delete[]aux;
-	return true;
-}
-
-//------------------------------------------------------------------------------------------------------------
-
 

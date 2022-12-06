@@ -82,7 +82,6 @@ int main()
         }
     }
 
-
     delete[] lista_de_consultas;
     delete[] lista_de_contactos;
     delete[] lista_de_medicos;

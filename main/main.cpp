@@ -14,18 +14,20 @@ int main()
     string archivo_Contactos = "Contactos.csv";
     string archivo_Medicos = "Medicos.csv";
     string archivo_Pacientes = "Pacientes.csv";
-    string archivo_Obra_Social= "Pacientes.csv";
+    string archivo_Obra_Social= "ObraSocial.csv";
 
     consultas_t* lista_de_consultas = nullptr;
     contactos_t* lista_de_contactos = nullptr;
     medicos_t* lista_de_medicos = nullptr;
     pacientes_t* lista_de_pacientes = nullptr;
+    obra_social_t* lista_obra_social = nullptr;
 
     // cargo cada registro del archivo a su respectiva estructura
     lista_de_consultas = cargar_datos_de_un_archivo_a_una_estruct_consulta(archivo_Consultas, lista_de_consultas);
     lista_de_contactos = cargar_datos_de_un_archivo_a_una_estruct_contactos(archivo_Contactos, lista_de_contactos);
     lista_de_medicos = cargar_datos_de_un_archivo_a_una_estruct_medicos(archivo_Medicos, lista_de_medicos);
     lista_de_pacientes = cargar_datos_de_un_archivo_a_una_estruct_pacientes(archivo_Pacientes, lista_de_pacientes);
+    lista_obra_social = cargar_datos_de_un_archivo_a_una_estruct_obra_social(archivo_Obra_Social, lista_obra_social);
     //-----------------------------------------------------------------------
     historia_clinica_t aux;
     int cant_irrecuperables = 0;

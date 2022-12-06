@@ -13,14 +13,14 @@ enum class ESTADO
 {
 	fallecido, internado, n_c, niguno
 };
-enum class EstadoObraSocial
-{ 
-	Medicus, OSDE, IOSFA, Italiano, Aleman, Espanyol,ninguno
-};
+//enum class EstadoObraSocial
+//{ 
+//	Medicus, OSDE, IOSFA, Italiano, Aleman, Espanyol,ninguno
+//};
 struct Obra_Social 
 {
 	int id_os;
-	EstadoObraSocial estado_obra_social;
+	string estado_obra_social;
 }; typedef Obra_Social obra_social_t;
 struct Historia_clinica
 {
@@ -89,6 +89,7 @@ void cargar_estructura_irrecupeables_a_archivo_irrecuperable(historia_clinica_t*
 bool verificar_tiempo_10anios(string  _dni_paciente);
 void agregar_paciente_a_secretaria(contactos_t* lista_secretaria, string dni,contactos_t* lista_contactos,int& cantidad);
 void mandar_archivo_a_secretaria(contactos_t* lista_a_secretaria,  int _cant_de_contactos_secretaria, pacientes_t* lista_pacientes);
+obra_social_t cargar_datos_de_un_archivo_a_una_estruct_obra_social(string file,obra_social_t* vector);
 
 //------------------------------
 

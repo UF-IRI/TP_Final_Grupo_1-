@@ -10,6 +10,43 @@ Consultas::Consultas()
 	string matricula_med = " ";
 }
 
+Historia_clinica::Historia_clinica()
+{
+	dni_paciente = "";
+	fecha_ultima_cita = { 0,0,0,0,0,0,0,0,0 };
+	cita_concurrida = false;
+	ultimo_medico=""; 
+	estado=ESTADO::niguno; 
+}
+Medicos::Medicos()
+{
+	matricula = " ";
+	nombre = " ";
+	apellido = " ";
+	telefono = " ";
+	especialidad = " ";
+	activo = false;
+}
+
+Contactos::Contactos()
+{
+	dni_paciente = " ";
+	telefono = " ";
+	celular = " ";
+	direccion = " ";
+	mail = " ";
+}
+
+Pacientes::Pacientes()
+{
+	string dni = " ";
+	string nombre = " ";
+	string apellido = " ";
+	sexo = '0';
+	natalicio = { 0,0,0,0,0,0,0,0,0 };
+	estado = ESTADO::niguno;
+	obra_social = " ";
+}
 int cantidad_de_registros(string file)
 {
 	ifstream fp;
@@ -254,43 +291,7 @@ pacientes_t* cargar_datos_de_un_archivo_a_una_estruct_pacientes(string file, pac
 	return vector;
 }
 
-Historia_clinica::Historia_clinica()
-{
-	dni_paciente = "";
-	fecha_ultima_cita = { 0,0,0,0,0,0,0,0,0 };
-	cita_concurrida = false;
-	ultimo_medico=""; 
-	estado=ESTADO::niguno; 
-}
-Medicos::Medicos()
-{
-	matricula = " ";
-	nombre = " ";
-	apellido = " ";
-	telefono = " ";
-	especialidad = " ";
-	activo = false;
-}
 
-Contactos::Contactos()
-{
-	dni_paciente = " ";
-	telefono = " ";
-	celular = " ";
-	direccion = " ";
-	mail = " ";
-}
-
-Pacientes::Pacientes()
-{
-	string dni = " ";
-	string nombre = " ";
-	string apellido = " ";
-	sexo = '0';
-	natalicio = { 0,0,0,0,0,0,0,0,0 };
-	estado = ESTADO::niguno;
-	obra_social = " ";
-}
 int obtener_dia(string cadena)
 {
 	int dia = 0;
@@ -457,6 +458,35 @@ void cargar_estructura_irrecupeables_a_archivo_irrecuperable(historia_clinica_t*
 	}
 	fp.close();
 }
+obra_social_t cargar_datos_de_un_archivo_a_una_estruct_obra_social(string file, obra_social_t* vector)
+{
+	int cant_registros_del_archivo = 0;
+	string linea;
+	int i = 0;
+	char delimitador = ',';
+	cant_registros_del_archivo = cantidad_de_registros(file);
+	vector = new obra_social_t[cant_registros_del_archivo];
+	ifstream fp;
+	fp.open("ObraSocial.csv", ios::in);
+	{
+		cout << "no se puede abrir el archivo" << endl;
+		exit(1);
+	}
+	getline(fp, linea);
+	while (getline(fp, linea))
+	{
+		string _id;
+		string _obra_social;
+		getline(buffer, _id, delimitador);
+		getline(buffer, _obra_social, delimitador);
+
+		vector[i] = stoi(_di);
+		vector[i] = _obra_social;
+		i++;
+	}
+	fclose(fp);
+	return vector;
+}
 
 void agregar_paciente_a_secretaria(contactos_t* lista_secretaria, string dni, contactos_t* lista_contactos, int& cantidad)
 {
@@ -503,11 +533,7 @@ void mandar_archivo_a_secretaria(contactos_t* lista_a_secretaria, int _cant_de_c
 			{
 				retorna = "no retorna";
 			}
-
-
-
-
-		fp << lista_a_secretaria[i].dni_paciente << "," << lista_a_secretaria[i].telefono << "," << lista_a_secretaria[i].celular<<"," << lista_a_secretaria[i].direccion<<"," << lista_a_secretaria[i].mail <<","<< respuesta<<obra_social << endl;
+		fp << lista_a_secretaria[i].dni_paciente << "," << lista_a_secretaria[i].telefono << "," << lista_a_secretaria[i].celular<<"," << lista_a_secretaria[i].direccion<<"," << lista_a_secretaria[i].mail <<","<< retorna <<valor_para_obras_social << endl;
 	}
 	fp.close();
 

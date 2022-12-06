@@ -68,7 +68,7 @@ int cantidad_de_registros(string file)
 	return contador;
 }
 //------------------------------------------
-consultas_t* cargar_datos_de_un_archivo_a_una_estruct_consulta(string file, consultas_t* vector)
+void cargar_datos_de_un_archivo_a_una_estruct_consulta(string file, consultas_t* vector)
 {
 	int cant_registros_del_archivo = 0;
 	string linea;
@@ -117,9 +117,8 @@ consultas_t* cargar_datos_de_un_archivo_a_una_estruct_consulta(string file, cons
 		cout << vector[i].dni_pac << delimitador << vector[i].fecha_solicitado.tm_mday << vector[i].fecha_solicitado.tm_mon << vector[i].fecha_solicitado.tm_year << delimitador << vector[i].presento << vector[i].matricula_med << endl;
 	}
 	fp.close();
-	return vector;
 }
-contactos_t* cargar_datos_de_un_archivo_a_una_estruct_contactos(string file, contactos_t* vector)
+void cargar_datos_de_un_archivo_a_una_estruct_contactos(string file, contactos_t* vector)
 {
 	int cant_registros_del_archivo = 0;
 	string linea;
@@ -162,10 +161,9 @@ contactos_t* cargar_datos_de_un_archivo_a_una_estruct_contactos(string file, con
 		i++;
 	}
 	fp.close();
-	return vector;
 }
 //------------------------------------------------------------
-medicos_t* cargar_datos_de_un_archivo_a_una_estruct_medicos(string file, medicos_t* vector)
+void cargar_datos_de_un_archivo_a_una_estruct_medicos(string file, medicos_t* vector)
 {
 	int cant_registros_del_archivo = 0;
 	string linea;
@@ -213,10 +211,10 @@ medicos_t* cargar_datos_de_un_archivo_a_una_estruct_medicos(string file, medicos
 		i++;
 	}
 	fp.close();
-	return vector;
+
 }
 //-------------------------------------------
-pacientes_t* cargar_datos_de_un_archivo_a_una_estruct_pacientes(string file, pacientes_t* vector)
+void cargar_datos_de_un_archivo_a_una_estruct_pacientes(string file, pacientes_t* vector)
 {
 	int aux_estado = 3;
 	int cant_registros_del_archivo = 0;
@@ -289,7 +287,6 @@ pacientes_t* cargar_datos_de_un_archivo_a_una_estruct_pacientes(string file, pac
 		i++;
 	}
 	fp.close();
-	return vector;
 }
 int obtener_dia(string cadena)
 {
@@ -440,7 +437,7 @@ void cargar_estructura_irrecupeables_a_archivo_irrecuperable(historia_clinica_t*
 	}
 	fp.close();
 }
-obra_social_t* cargar_datos_de_un_archivo_a_una_estruct_obra_social(string file, obra_social_t* vector)
+void cargar_datos_de_un_archivo_a_una_estruct_obra_social(string file, obra_social_t* vector)
 {
 	int cant_registros_del_archivo = 0;
 	string linea;
@@ -468,7 +465,6 @@ obra_social_t* cargar_datos_de_un_archivo_a_una_estruct_obra_social(string file,
 		i++;
 	}
 	fclose(fp);
-	return vector;
 }
 
 void agregar_paciente_a_secretaria(contactos_t* lista_secretaria, string dni, contactos_t* lista_contactos, int& cantidad)

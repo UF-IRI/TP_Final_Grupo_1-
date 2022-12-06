@@ -1,6 +1,6 @@
 #include "gmock/gmock.h"
 #include"funciones.h"
-using namespace std;
+using namespace testing;
 namespace foobar::tests 
 {
 	TEST(testeo1, Example)
@@ -38,19 +38,5 @@ namespace foobar::tests
 		string _aux = "n_c"; //fallecido=0, internado=1, n_c=2
 		ASSERT_EQ(obtener_estado_como_numero(_aux), 1);
 	}
-
-
-
-	//TEST(ExampleTests, Example) {
- //       ASSERT_THAT(1, 1);
-	//}
-	//TEST(testeo1, Example) {//
-	//	string _dni = "234321";
-	//	ASSERT_TRUE(Comprobacion_dni(_dni));
-	//}
-	//TEST(testeo2, Example) {//
-	//	string _dni = "wefrgtb";
-	//	ASSERT_TRUE(Comprobacion_dni(_dni));
-	//}
 
 }

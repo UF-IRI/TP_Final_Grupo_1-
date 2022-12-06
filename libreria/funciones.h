@@ -2,7 +2,6 @@
 #pragma once
 #include<cstdlib>
 #include<iostream>
-#include<sstream>
 #include<string>
 #include<fstream>
 #include<ctime> 
@@ -81,16 +80,16 @@ int obtener_mes(string cadena);
 int obtener_anio(string cadena);
 bool obtener_presento(string cadena);
 int obtener_estado_como_numero(string estado_paciente);
-consultas_t* cargar_datos_de_un_archivo_a_una_estruct_consulta(string file, consultas_t* vector);
-contactos_t* cargar_datos_de_un_archivo_a_una_estruct_contactos(string file, contactos_t* vector);
-medicos_t* cargar_datos_de_un_archivo_a_una_estruct_medicos(string file, medicos_t* vector);
-pacientes_t* cargar_datos_de_un_archivo_a_una_estruct_pacientes(string file, pacientes_t* vector);
+void cargar_datos_de_un_archivo_a_una_estruct_consulta(string file, consultas_t* vector);
+void cargar_datos_de_un_archivo_a_una_estruct_contactos(string file, contactos_t* vector);
+void cargar_datos_de_un_archivo_a_una_estruct_medicos(string file, medicos_t* vector);
+void cargar_datos_de_un_archivo_a_una_estruct_pacientes(string file, pacientes_t* vector);
 void agregar_paciente_a_historia_clinica_irrecuperables(historia_clinica_t* lista,historia_clinica_t paciente,int& cantidad);
 void cargar_estructura_irrecupeables_a_archivo_irrecuperable(historia_clinica_t* lista, int cantidad);
 bool verificar_tiempo_10anios(tm fecha_turno);
 void agregar_paciente_a_secretaria(contactos_t* lista_secretaria, string dni,contactos_t* lista_contactos,int& cantidad);
 void mandar_archivo_a_secretaria(int cant_consultas, int cant_pacientes, contactos_t* lista_a_secretaria,  int _cant_de_contactos_secretaria, pacientes_t* lista_pacientes,consultas_t* lista_consultas);
-obra_social_t* cargar_datos_de_un_archivo_a_una_estruct_obra_social(string file,obra_social_t* vector);
+void cargar_datos_de_un_archivo_a_una_estruct_obra_social(string file,obra_social_t* vector);
 void crear_archivo_pacientes_medico_ultima_consulta(pacientes_t* list_pacientes,medicos_t* list_medicos,consultas_t* list_consultas,contactos_t* list_contactos,int cant_contactos,int cant_pacientes, int cant_medicos,int cant_consultas);
 
 //------------------------------

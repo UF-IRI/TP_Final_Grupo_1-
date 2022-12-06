@@ -1,23 +1,23 @@
 #include"funciones.h"
 
-
+using namespace std;
 Consultas::Consultas()
 {
 	dni_pac = " ";
 	fecha_solicitado = { 0,0,0,0,0,0,0,0,0 };
 	fecha_turno = { 0,0,0,0,0,0,0,0,0 };
 	presento = false;
-	string matricula_med = " ";
-}
+	matricula_med = " ";
+};
 
-Historia_clinica::Historia_clinica
+Historia_clinica::Historia_clinica()
 {
 	dni_paciente = "";
 	fecha_ultima_cita = { 0,0,0,0,0,0,0,0,0 };
 	cita_concurrida = false;
 	ultimo_medico = "";
 	estado = ESTADO::niguno;
-}
+};
 Medicos::Medicos()
 {
 	matricula = " ";
@@ -26,7 +26,7 @@ Medicos::Medicos()
 	telefono = " ";
 	especialidad = " ";
 	activo = false;
-}
+};
 
 Contactos::Contactos()
 {

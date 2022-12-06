@@ -34,7 +34,6 @@ struct Historia_clinica
 	//--------- tm fecha_de_reprogramacion; // el dia de reprogramacion la cita medica
 	ESTADO estado=ESTADO::niguno; // 0 si está vivo, 1 si está internado, 2 si murió// estado -> pacientes 
 	Historia_clinica();
-	//historia_clinica_t();
 }; typedef struct Historia_clinica historia_clinica_t;
 struct Consultas
 {

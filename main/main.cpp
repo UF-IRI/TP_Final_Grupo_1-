@@ -26,7 +26,7 @@ int main()
     lista_obra_social = cargar_datos_de_un_archivo_a_una_estruct_obra_social(archivo_Obra_Social, lista_obra_social);
     //-----------------------------------------------------------------------
     //tm fechainicializar = { 0,0,0,0,0,0,0,0 };
-    historia_clinica_t aux_h = { "",{0,0,0,0,0,0,0,0,0},false," ",ESTADO::niguno };
+    historia_clinica_t aux_h = { " ", { 0,0,0,0,0,0,0,0,0 }, false, " ", ESTADO::niguno };
     int cant_irrecuperables = 0;
     historia_clinica_t* lista_historia_clinica_irrecuperables= new historia_clinica_t[cant_irrecuperables];
 

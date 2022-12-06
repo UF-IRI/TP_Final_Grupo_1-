@@ -10,7 +10,7 @@ int main()
     string archivo_Contactos = "Contactos.csv";
     string archivo_Medicos = "Medicos.csv";
     string archivo_Pacientes = "Pacientes.csv";
-    string archivo_Obra_Social= "ObraSocial.csv";
+    string archivo_Obra_Social = "ObraSocial.csv";
 
     consultas_t* lista_de_consultas = nullptr;
     contactos_t* lista_de_contactos = nullptr;
@@ -25,7 +25,8 @@ int main()
     lista_de_pacientes = cargar_datos_de_un_archivo_a_una_estruct_pacientes(archivo_Pacientes, lista_de_pacientes);
     lista_obra_social = cargar_datos_de_un_archivo_a_una_estruct_obra_social(archivo_Obra_Social, lista_obra_social);
     //-----------------------------------------------------------------------
-    historia_clinica_t aux_h;
+    //tm fechainicializar = { 0,0,0,0,0,0,0,0 };
+    historia_clinica_t aux_h = { "",{0,0,0,0,0,0,0,0,0},false," ",ESTADO::niguno };
     int cant_irrecuperables = 0;
     historia_clinica_t* lista_historia_clinica_irrecuperables= new historia_clinica_t[cant_irrecuperables];
 
@@ -69,11 +70,11 @@ int main()
                     }
                     else if(lista_de_pacientes[j].estado == ESTADO::fallecido)
                     {
-
+                        cout << "el paciente esta muerto no enviar a secretaria. " << endl;
                     }
                     else if(lista_de_pacientes[j].estado == ESTADO::n_c)
                     {
-
+                        cout << "no se sabe nada." << endl;
                     }
                 }
             }

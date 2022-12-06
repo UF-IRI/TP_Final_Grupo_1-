@@ -10,13 +10,13 @@ Consultas::Consultas()
 	string matricula_med = " ";
 }
 
-Historia_clinica::Historia_clinica()
+Historia_clinica::Historia_clinica
 {
 	dni_paciente = "";
 	fecha_ultima_cita = { 0,0,0,0,0,0,0,0,0 };
 	cita_concurrida = false;
-	ultimo_medico=""; 
-	estado=ESTADO::niguno; 
+	ultimo_medico = "";
+	estado = ESTADO::niguno;
 }
 Medicos::Medicos()
 {

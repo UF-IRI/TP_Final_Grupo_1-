@@ -1,4 +1,4 @@
-
+#pragma warning
 #pragma once
 #include<cstdlib>
 #include<iostream>
@@ -26,14 +26,15 @@ struct Obra_Social
 struct Historia_clinica
 {
 
-	string dni_paciente;// dni->consulta
-	tm fecha_ultima_cita;//fecha_turno ->consulta
-	bool cita_concurrida; // verdadero: asistio�, falso:no asistio// presento ->consulta
+	string dni_paciente=" ";// dni->consulta
+	tm fecha_ultima_cita = { 0,0,0,0,0,0,0,0,0 };//fecha_turno ->consulta
+	bool cita_concurrida=false; // verdadero: asistio�, falso:no asistio// presento ->consulta
 	//--------- bool reprogramacion_fecha; // verdadero: reprogramaron , falso: no reprogramaron //
-	string ultimo_medico; // matricula del ultimo medico que atendia al paciente// matricula_medico -> consultas
+	string ultimo_medico=" "; // matricula del ultimo medico que atendia al paciente// matricula_medico -> consultas
 	//--------- tm fecha_de_reprogramacion; // el dia de reprogramacion la cita medica
-	ESTADO estado; // 0 si está vivo, 1 si está internado, 2 si murió// estado -> pacientes 
+	ESTADO estado=ESTADO::niguno; // 0 si está vivo, 1 si está internado, 2 si murió// estado -> pacientes 
 	Historia_clinica();
+	//historia_clinica_t();
 }; typedef struct Historia_clinica historia_clinica_t;
 struct Consultas
 {

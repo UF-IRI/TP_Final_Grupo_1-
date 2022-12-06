@@ -25,8 +25,15 @@ int main()
     lista_de_pacientes = cargar_datos_de_un_archivo_a_una_estruct_pacientes(archivo_Pacientes, lista_de_pacientes);
     lista_obra_social = cargar_datos_de_un_archivo_a_una_estruct_obra_social(archivo_Obra_Social, lista_obra_social);
     //-----------------------------------------------------------------------
-    //tm fechainicializar = { 0,0,0,0,0,0,0,0 };
-    historia_clinica_t aux_h = { " ", { 0,0,0,0,0,0,0,0,0 }, false, " ", ESTADO::niguno };
+    historia_clinica_t aux_h; 
+    aux_h.dni_paciente = "";
+    aux_h.fecha_ultima_cita= { 0,0,0,0,0,0,0,0,0 };
+
+
+
+    aux_h.cita_concurrida = false;
+    aux_h.estado = ESTADO::niguno;
+    aux_h.ultimo_medico = "";
     int cant_irrecuperables = 0;
     historia_clinica_t* lista_historia_clinica_irrecuperables= new historia_clinica_t[cant_irrecuperables];
 
@@ -36,7 +43,7 @@ int main()
     
     for (int i = 0; i < cantidad_de_registros(archivo_Consultas); i++)
     {
-        if (verificar_tiempo_10anios(lista_de_consultas[i].dni_pac) == true)
+        if (verificar_tiempo_10anios(lista_de_consultas[i].fecha_turno) == true)
         {
             aux_h.dni_paciente = lista_de_consultas[i].dni_pac;
             
@@ -81,6 +88,8 @@ int main()
             mandar_archivo_a_secretaria(cantidad_de_registros(archivo_Consultas),cantidad_de_registros(archivo_Pacientes),lista_a_secretaria, cant_de_contactos_secretaria,lista_de_pacientes,lista_de_consultas);
         }
     }
+
+    crear_archivo_pacientes_medico_ultima_consulta(lista_de_pacientes,lista_de_medicos,lista_de_consultas,lista_de_contactos,cantidad_de_registros(archivo_Contactos),cantidad_de_registros(archivo_Pacientes), cantidad_de_registros(archivo_Medicos), cantidad_de_registros(archivo_Consultas));
 
     delete[] lista_de_consultas;
     delete[] lista_de_contactos;

@@ -1,52 +1,53 @@
 #include"funciones.h"
 
 using namespace std;
-Consultas::Consultas()
-{
-	dni_pac = " ";
-	fecha_solicitado = { 0,0,0,0,0,0,0,0,0 };
-	fecha_turno = { 0,0,0,0,0,0,0,0,0 };
-	presento = false;
-	matricula_med = " ";
-};
+//Consultas::Consultas()
+//{
+//	dni_pac = " ";
+//	fecha_solicitado = { 0,0,0,0,0,0,0,0,0 };
+//	fecha_turno = { 0,0,0,0,0,0,0,0,0 };
+//	presento = false;
+//	matricula_med = " ";
+//};
 
-Historia_clinica::Historia_clinica()
-{
-	dni_paciente = "";
-	fecha_ultima_cita = { 0,0,0,0,0,0,0,0,0 };
-	cita_concurrida = false;
-	ultimo_medico = "";
-	estado = ESTADO::niguno;
-};
-Medicos::Medicos()
-{
-	matricula = " ";
-	nombre = " ";
-	apellido = " ";
-	telefono = " ";
-	especialidad = " ";
-	activo = false;
-};
+//Historia_clinica::Historia_clinica()
+//{
+//	dni_paciente = "";
+//	fecha_ultima_cita = { 0,0,0,0,0,0,0,0,0 };
+//	cita_concurrida = false;
+//	ultimo_medico = "";
+//	estado = ESTADO::niguno;
+//};
+//Medicos::Medicos()
+//{
+//	matricula = " ";
+//	nombre = " ";
+//	apellido = " ";
+//	telefono = " ";
+//	especialidad = " ";
+//	activo = false;
+//};
+//
+//Contactos::Contactos()
+//{
+//	dni_paciente = " ";
+//	telefono = " ";
+//	celular = " ";
+//	direccion = " ";
+//	mail = " ";
+//}
+//
+//Pacientes::Pacientes()
+//{
+//	string dni = " ";
+//	string nombre = " ";
+//	string apellido = " ";
+//	sexo = '0';
+//	natalicio = { 0,0,0,0,0,0,0,0,0 };
+//	estado = ESTADO::niguno;
+//	obra_social = " ";
+//};
 
-Contactos::Contactos()
-{
-	dni_paciente = " ";
-	telefono = " ";
-	celular = " ";
-	direccion = " ";
-	mail = " ";
-}
-
-Pacientes::Pacientes()
-{
-	string dni = " ";
-	string nombre = " ";
-	string apellido = " ";
-	sexo = '0';
-	natalicio = { 0,0,0,0,0,0,0,0,0 };
-	estado = ESTADO::niguno;
-	obra_social = " ";
-}
 int cantidad_de_registros(string file)
 {
 	ifstream fp;
@@ -290,8 +291,6 @@ pacientes_t* cargar_datos_de_un_archivo_a_una_estruct_pacientes(string file, pac
 	fp.close();
 	return vector;
 }
-
-
 int obtener_dia(string cadena)
 {
 	int dia = 0;
@@ -391,45 +390,28 @@ int obtener_estado_como_numero(string estado_paciente)
 	return 4;
 }
 //--------------------------------------------
-bool verificar_tiempo_10anios(string  _dni_paciente)
+bool verificar_tiempo_10anios(tm fecha_turno)
 {
-	fstream fp;
-	//Paciente aux2;
-	historia_clinica_t aux;
-	//Contacto aux3;
-	char coma = ',';
-	fp.open("Historia_clinica.csv", ios::in);
-	if (!fp.is_open())
-	{
-		cout << " No se pudo abrir";
-		exit(1);
-	}
-	while (fp)
-	{
-		fp >> aux.dni_paciente >> coma >> aux.fecha_ultima_cita.tm_mday >> coma
-			>> aux.fecha_ultima_cita.tm_mon >> aux.fecha_ultima_cita.tm_year >> coma >>
-			aux.cita_concurrida >> coma >> aux.reprogramacion_fecha >> coma >>
-			aux.ultimo_medico >> coma >> aux.fecha_de_reprogramacion.tm_mday >> coma >>
-			aux.fecha_de_reprogramacion.tm_mon >> aux.fecha_de_reprogramacion.tm_year >> aux.estado;
 
-		if (aux.dni_paciente == _dni_paciente)
-		{
-			time_t actual;
-			time(*actual);
-			time_t fecha_ultimo;
-			fecha_ultimo = pac_hist.fecha_ultima_cita.Anio * 31540000 + pac_hist.fecha_ultima_cita.mes * 262800 + pac_hist.fecha_ultima_cita.dia * 86400;
-			float decada;
-			decada = difftime(actual, fecha_ultimo) / 31540000;
-			if (decada >= 10)
-			{
-				return true;
-			}
-			else
-				return false;
-		}
+	time_t tSac = time(NULL); // instante actual
+	tm actual = *localtime(&tSac);
+	//---------------------------
+	float decada;
+	if (actual.tm_year - fecha_turno.tm_year > 10)
+	{
+		return true;
 	}
-	fp.close();
-
+	else if (actual.tm_year - fecha_turno.tm_year == 10 && fecha_turno.tm_mon - actual.tm_mon <= 0)
+	{
+		return true;
+	}
+	else if (actual.tm_year - fecha_turno.tm_year == 10 && actual.tm_mon - fecha_turno.tm_mon == 0 && actual.tm_mday - fecha_turno.tm_mday <= 0)
+	{
+		return true;
+	}
+	else {
+		return false;
+	}
 }
 void agregar_paciente_a_historia_clinica_irrecuperables(historia_clinica_t* lista, historia_clinica_t paciente, int& cantidad)
 {
@@ -468,6 +450,7 @@ obra_social_t* cargar_datos_de_un_archivo_a_una_estruct_obra_social(string file,
 	vector = new obra_social_t[cant_registros_del_archivo];
 	ifstream fp;
 	fp.open("ObraSocial.csv", ios::in);
+	if (!fp.is_open())
 	{
 		cout << "no se puede abrir el archivo" << endl;
 		exit(1);
@@ -513,16 +496,20 @@ void mandar_archivo_a_secretaria(int cant_consultas,int cant_pacientes,contactos
 {
 	string aux_obrasocial;
 	string mensaje;
-	ofstream fp;
+	ofstream fp1;
 	srand(time(NULL));
 	int valor_para_saber_si_retorna = 0;
 	int valor_para_obras_social = 0;
 	string retorna;
-	fp.open("contactos_de_secretaria.txt", ios::app);
-	if (!fp.is_open())
+	
+	fp1.open("contactos_de_secretaria.txt", ios::app);
+	//fp2.open("archivo_paciente_medico_y_ultima_consulta",ios::app);
+	if (!fp1.is_open())
 	{
+		cout << "no se pudo abrir archivo contactos_de_secretaria.txt." << endl;
 		exit(1);
 	}
+
 	for (int i = 0; i < _cant_de_contactos_secretaria; i++)
 	{
 		valor_para_saber_si_retorna = rand() + 2;
@@ -579,12 +566,60 @@ void mandar_archivo_a_secretaria(int cant_consultas,int cant_pacientes,contactos
 				retorna = "no retorna";
 			}
 
-		fp << lista_a_secretaria[i].dni_paciente << "," << lista_a_secretaria[i].telefono << "," << lista_a_secretaria[i].celular<<"," << lista_a_secretaria[i].direccion<<"," << lista_a_secretaria[i].mail <<","<< retorna<<"," << valor_para_obras_social<< "," << lista_consultas[j].fecha_turno.tm_mday <<"," << lista_a_secretaria[i].celular << "," << lista_a_secretaria[i].direccion << "," << lista_a_secretaria[i].mail << "," << retorna << "," << valor_para_obras_social << ","<< lista_consultas[j].fecha_turno.tm_mday<<"/" << lista_consultas[j].fecha_turno.tm_mon << "/" << lista_consultas[j].fecha_turno.tm_year<<","<<mensaje<< endl;
+		fp1 << lista_a_secretaria[i].dni_paciente << "," << lista_a_secretaria[i].telefono << "," << lista_a_secretaria[i].celular<<"," << lista_a_secretaria[i].direccion<<"," << lista_a_secretaria[i].mail <<","<< retorna<<"," << valor_para_obras_social<< "," << lista_consultas[j].fecha_turno.tm_mday <<"," << lista_a_secretaria[i].celular << "," << lista_a_secretaria[i].direccion << "," << lista_a_secretaria[i].mail << "," << retorna << "," << valor_para_obras_social << ","<< lista_consultas[j].fecha_turno.tm_mday<<"/" << lista_consultas[j].fecha_turno.tm_mon << "/" << lista_consultas[j].fecha_turno.tm_year<<","<<mensaje<< endl;
+
 	}
 
-	fp.close();
+	fp1.close();
 
 }
 
+void crear_archivo_pacientes_medico_ultima_consulta(pacientes_t* list_pacientes, medicos_t* list_medicos, consultas_t* list_consultas, contactos_t* list_contactos, int cant_contactos, int cant_pac, int cant_med, int cant_consul)
+{
+	ofstream fp;
+	char coma = ',';
+	string _nombre;
+	string _apellido;
+	string _telefono;
+	string _matricula_medico;
+	string _obra_social;
+	fp.open("archivo_paciente_medico_y_ultima_consulta", ios::app);
 
+	if (!fp.is_open())
+	{
+		cout << "no se pudo abrir el archivo." << endl;
+		exit(1);
+	}
+	else
+	{  // -matricula_medico(cons)
+		for (int i = 0; i < cant_pac; i++)
+		{
+			if (verificar_tiempo_10anios(list_pacientes[i].dni_pac) != true)// es < 10 años
+			{
+				_nombre = list_pacientes[i];
+				_apellido = list_pacientes[i];
+				_obra_social = list_pacientes[i].obra_social;
+				for (int j = 0; j < cant_contactos; j++)
+				{
+					if (list_pacientes[i]==list_contactos[j])
+					{
+						_telefono = list_contactos[j];
+					}
+					break;
+				}
+				for (int k = 0; k < cant_consul; k++)
+				{
+					if (list_pacientes[i].dni == list_consultas[k].dni_pac)
+					{
+						_matricula_medico = list_consultas[k].matricula_med;
+					}
+					break;
+				}
+			}
+		}
+	}
+
+	fp << _nombre << "," << _apellido << "," << _telefono << "," << _matricula_medico << "," << _obra_social << endl;
+	fp.close(fp);
+}
 

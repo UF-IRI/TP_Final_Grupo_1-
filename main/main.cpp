@@ -82,10 +82,8 @@ int main()
                     }
                 }
             }
-            mandar_archivo_a_secretaria(lista_a_secretaria, cant_de_contactos_secretaria);
+            mandar_archivo_a_secretaria(lista_a_secretaria, cant_de_contactos_secretaria,lista_de_pacientes,lista_de_consultas);
         }
-
-
     }
 
 

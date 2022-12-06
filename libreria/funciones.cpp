@@ -458,7 +458,7 @@ void cargar_estructura_irrecupeables_a_archivo_irrecuperable(historia_clinica_t*
 	}
 	fp.close();
 }
-obra_social_t cargar_datos_de_un_archivo_a_una_estruct_obra_social(string file, obra_social_t* vector)
+obra_social_t* cargar_datos_de_un_archivo_a_una_estruct_obra_social(string file, obra_social_t* vector)
 {
 	int cant_registros_del_archivo = 0;
 	string linea;
@@ -509,7 +509,7 @@ void agregar_paciente_a_secretaria(contactos_t* lista_secretaria, string dni, co
 		}
 	}
 }
-void mandar_archivo_a_secretaria(contactos_t* lista_a_secretaria, int _cant_de_contactos_secretaria,pacientes_t* lista_pacientes)
+void mandar_archivo_a_secretaria(contactos_t* lista_a_secretaria, int _cant_de_contactos_secretaria,pacientes_t* lista_pacientes, consultas_t* lista_consultas)
 {
 	ofstream fp;
 	srand(time(NULL));
@@ -528,13 +528,26 @@ void mandar_archivo_a_secretaria(contactos_t* lista_a_secretaria, int _cant_de_c
 			{
 				retorna = "retorna";
 				valor_para_obras_social = 1+rand() + 7;
+				for (int j = 0; j <cant_consultas; j++)
+				{
+					if (lista_a_secretaria[i].dni_paciente=lista_consultas[j].dni_pac)
+					{
+						lista_consultas[j].fecha_turno.tm_mday = 1 + rand() + 32;
+						lista_consultas[j].fecha_turno.tm_mon == 1 + rand()+13;
+						lista_consultas[j].fecha_turno.tm_year == 2022 + rand()+2023 ;
+					}
+				}
 			}
 			else
 			{
 				retorna = "no retorna";
 			}
-		fp << lista_a_secretaria[i].dni_paciente << "," << lista_a_secretaria[i].telefono << "," << lista_a_secretaria[i].celular<<"," << lista_a_secretaria[i].direccion<<"," << lista_a_secretaria[i].mail <<","<< retorna <<valor_para_obras_social << endl;
+
+		fp << lista_a_secretaria[i].dni_paciente << "," << lista_a_secretaria[i].telefono << "," << lista_a_secretaria[i].celular<<"," << lista_a_secretaria[i].direccion<<"," << lista_a_secretaria[i].mail <<","<< retorna<<"," << valor_para_obras_social<< "," << lista_consultas[j].fecha_turno.tm_mday <<"," << lista_a_secretaria[i].celular << "," << lista_a_secretaria[i].direccion << "," << lista_a_secretaria[i].mail << "," << retorna << "," << valor_para_obras_social << ","<< lista_consultas[j].fecha_turno.tm_mday<<"/" << lista_consultas[j].fecha_turno.tm_mon << "/" << lista_consultas[j].fecha_turno.tm_year << endl;
 	}
+
+
+
 	fp.close();
 
 }

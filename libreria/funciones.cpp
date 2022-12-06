@@ -254,7 +254,14 @@ pacientes_t* cargar_datos_de_un_archivo_a_una_estruct_pacientes(string file, pac
 	return vector;
 }
 
-
+Historia_clinica::Historia_clinica()
+{
+	dni_paciente = "";
+	fecha_ultima_cita = { 0,0,0,0,0,0,0,0,0 };
+	cita_concurrida = false;
+	ultimo_medico=""; 
+	estado=ESTADO::niguno; 
+}
 Medicos::Medicos()
 {
 	matricula = " ";
@@ -423,4 +430,88 @@ bool verificar_tiempo_10anios(string  _dni_paciente)
 	fp.close();
 
 }
+void agregar_paciente_a_historia_clinica_irrecuperables(historia_clinica_t* lista, historia_clinica_t paciente, int& cantidad)
+{
+	historia_clinica_t* aux = new historia_clinica_t[cantidad + 1];
+	for (int i = 0; i < cantidad; i++)
+	{
+		aux[i] = lista[i];
+	}
+	aux[cantidad] = paciente;
+	lista = aux;
+	delete[] aux;
+	cantidad++;
+}
+
+void cargar_estructura_irrecupeables_a_archivo_irrecuperable(historia_clinica_t* lista, int cantidad) //agrega un paciente al archivo de irrecuperables
+{
+	ofstream fp;
+	fp.open("irrecuperables.txt", ios::app);
+	if (!fp.is_open())
+	{
+		exit(1);
+	}
+	for (int i = 0; i < cantidad; i++)
+	{
+		fp << lista[i].dni_paciente << "," << lista[i].cita_concurrida << "," << lista[i].estado << "," << lista[i].fecha_ultima_cita.tm_mday << "/" << lista[i].fecha_ultima_cita.tm_mon << "/" <<lista[i].fecha_ultima_cita.tm_year << lista[i].ultimo_medico<<"--->archivado" << endl;
+	}
+	fp.close();
+}
+
+void agregar_paciente_a_secretaria(contactos_t* lista_secretaria, string dni, contactos_t* lista_contactos, int& cantidad)
+{
+	contactos_t* aux = new contactos_t[cantidad + 1];
+	for (int i = 0; i < cantidad_de_registros(lista_contactos); i++)
+	{
+		if (lista_contactos[i].dni_paciente == dni)
+		{
+			for (int j = 0; j <cantidad ; j++)
+			{
+				aux[j] = lista_secretaria[j];
+			}
+			aux[cantidad] = lista_contactos[i];
+			lista_secretaria = aux;
+			cantidad++;
+			delete[] aux;
+		}
+		else {
+			cout << "no se encontro el dni en el archivo consultas." << endl;
+		}
+	}
+}
+void mandar_archivo_a_secretaria(contactos_t* lista_a_secretaria, int _cant_de_contactos_secretaria,pacientes_t* lista_pacientes)
+{
+	ofstream fp;
+	srand(time(NULL));
+	int valor_para_saber_si_retorna = 0;
+	int valor_para_obras_social = 0;
+	string retorna;
+	fp.open("contactos_de_secretaria.txt", ios::app);
+	if (!fp.is_open())
+	{
+		exit(1);
+	}
+	for (int i = 0; i < _cant_de_contactos_secretaria; i++)
+	{
+		valor_para_saber_si_retorna = rand() + 2;
+			if (valor_para_saber_si_retorna ==0)
+			{
+				retorna = "retorna";
+				valor_para_obras_social = 1+rand() + 7;
+			}
+			else
+			{
+				retorna = "no retorna";
+			}
+
+
+
+
+		fp << lista_a_secretaria[i].dni_paciente << "," << lista_a_secretaria[i].telefono << "," << lista_a_secretaria[i].celular<<"," << lista_a_secretaria[i].direccion<<"," << lista_a_secretaria[i].mail <<","<< respuesta<<obra_social << endl;
+	}
+	fp.close();
+
+}
+
+
 

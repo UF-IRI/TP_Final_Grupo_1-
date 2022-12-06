@@ -1,12 +1,6 @@
-#pragma once
-#include<string>
-#include <stdlib>
-#include <fstream>
-using namespace std;
 
 #pragma once
-
-#include<stdlib.h>
+#include<cstdlib>
 #include<iostream>
 #include<sstream>
 #include<string>
@@ -19,6 +13,27 @@ enum class ESTADO
 {
 	fallecido, internado, n_c, niguno
 };
+enum class EstadoObraSocial
+{ 
+	Medicus, OSDE, IOSFA, Italiano, Aleman, Espanyol,ninguno
+};
+struct Obra_Social 
+{
+	int id_os;
+	EstadoObraSocial estado_obra_social;
+}; typedef Obra_Social obra_social_t;
+struct Historia_clinica
+{
+
+	string dni_paciente;// dni->consulta
+	tm fecha_ultima_cita;//fecha_turno ->consulta
+	bool cita_concurrida; // verdadero: asistio�, falso:no asistio// presento ->consulta
+	//--------- bool reprogramacion_fecha; // verdadero: reprogramaron , falso: no reprogramaron //
+	string ultimo_medico; // matricula del ultimo medico que atendia al paciente// matricula_medico -> consultas
+	//--------- tm fecha_de_reprogramacion; // el dia de reprogramacion la cita medica
+	ESTADO estado; // 0 si está vivo, 1 si está internado, 2 si murió// estado -> pacientes 
+	Historia_clinica();
+}; typedef struct Historia_clinica historia_clinica_t;
 struct Consultas
 {
 	string dni_pac;
@@ -69,16 +84,12 @@ consultas_t* cargar_datos_de_un_archivo_a_una_estruct_consulta(string file, cons
 contactos_t* cargar_datos_de_un_archivo_a_una_estruct_contactos(string file, contactos_t* vector);
 medicos_t* cargar_datos_de_un_archivo_a_una_estruct_medicos(string file, medicos_t* vector);
 pacientes_t* cargar_datos_de_un_archivo_a_una_estruct_pacientes(string file, pacientes_t* vector);
-//------------------------------
-struct Historia_clinica
-{
+void agregar_paciente_a_historia_clinica_irrecuperables(historia_clinica_t* lista,historia_clinica_t paciente,int& cantidad);
+void cargar_estructura_irrecupeables_a_archivo_irrecuperable(historia_clinica_t* lista, int cantidad);
+bool verificar_tiempo_10anios(string  _dni_paciente);
+void agregar_paciente_a_secretaria(contactos_t* lista_secretaria, string dni,contactos_t* lista_contactos,int& cantidad);
+void mandar_archivo_a_secretaria(contactos_t* lista_a_secretaria,  int _cant_de_contactos_secretaria, pacientes_t* lista_pacientes);
 
-	string dni_paciente;
-	tm fecha_ultima_cita;
-	bool cita_concurrida; // verdadero: asistio�, falso:no asistio
-	bool reprogramacion_fecha; // verdadero: reprogramaron , falso: no reprogramaron
-	string ultimo_medico; // matricula del ultimo medico que atendia al paciente
-	tm fecha_de_reprogramacion; // el dia de reprogramacion la cita medica
-	string estado; // 0 si está vivo, 1 si está internado, 2 si murió
-}; typedef struct Historia_clinica historia_clinica_t;
+//------------------------------
+
 

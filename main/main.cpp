@@ -1,10 +1,6 @@
 #include "iri.cpp"
-#include <cstdlib>
-#include <iostream>
-#include <string>
-#include <fstream>
+#include<iostream>
 #include "funciones.h"
-//#include <ctime>
 
 using namespace std;
 
@@ -29,11 +25,10 @@ int main()
     lista_de_pacientes = cargar_datos_de_un_archivo_a_una_estruct_pacientes(archivo_Pacientes, lista_de_pacientes);
     lista_obra_social = cargar_datos_de_un_archivo_a_una_estruct_obra_social(archivo_Obra_Social, lista_obra_social);
     //-----------------------------------------------------------------------
-    historia_clinica_t aux;
+    historia_clinica_t aux_h;
     int cant_irrecuperables = 0;
     historia_clinica_t* lista_historia_clinica_irrecuperables= new historia_clinica_t[cant_irrecuperables];
-    
-    contactos_t aux;
+
     int cant_de_contactos_secretaria = 0;
     contactos_t* lista_a_secretaria = new contactos_t[0];
 
@@ -42,25 +37,25 @@ int main()
     {
         if (verificar_tiempo_10anios(lista_de_consultas[i].dni_pac) == true)
         {
-            aux.dni_paciente = lista_de_consultas[i].dni_pac;
+            aux_h.dni_paciente = lista_de_consultas[i].dni_pac;
             
-            aux.fecha_ultima_cita.tm_mday = lista_de_consultas[i].fecha_turno.tm_mday;
-            aux.fecha_ultima_cita.tm_mon = lista_de_consultas[i].fecha_turno.tm_mon;
-            aux.fecha_ultima_cita.tm_year = lista_de_consultas[i].fecha_turno.tm_year;
-            aux.cita_concurrida = lista_de_consultas[i].presento;
-            aux.ultimo_medico = lista_de_consultas[i].matricula_med;
+            aux_h.fecha_ultima_cita.tm_mday = lista_de_consultas[i].fecha_turno.tm_mday;
+            aux_h.fecha_ultima_cita.tm_mon = lista_de_consultas[i].fecha_turno.tm_mon;
+            aux_h.fecha_ultima_cita.tm_year = lista_de_consultas[i].fecha_turno.tm_year;
+            aux_h.cita_concurrida = lista_de_consultas[i].presento;
+            aux_h.ultimo_medico = lista_de_consultas[i].matricula_med;
             for (int j = 0; j < cantidad_de_registros(archivo_Pacientes); j++)
             {
                 if (lista_de_consultas[i].dni_pac==lista_de_pacientes[j].dni)
                 {
-                    aux.estado = lista_de_pacientes[j].estado;
+                    aux_h.estado = lista_de_pacientes[j].estado;
                 }
                 else
                 {
-                    aux.estado = ESTADO::niguno;
+                    aux_h.estado = ESTADO::niguno;
                 }
             }
-            agregar_paciente_a_historia_clinica_irrecuperables(lista_historia_clinica_irrecuperables, aux, cant_irrecuperables);
+            agregar_paciente_a_historia_clinica_irrecuperables(lista_historia_clinica_irrecuperables, aux_h, cant_irrecuperables);
 
         } else//  pasaron menos de 10 años
         {
@@ -82,32 +77,11 @@ int main()
                     }
                 }
             }
-            mandar_archivo_a_secretaria(lista_a_secretaria, cant_de_contactos_secretaria,lista_de_pacientes,lista_de_consultas);
+            mandar_archivo_a_secretaria(cantidad_de_registros(archivo_Consultas),cantidad_de_registros(archivo_Pacientes),lista_a_secretaria, cant_de_contactos_secretaria,lista_de_pacientes,lista_de_consultas);
         }
     }
 
 
-    //f(verificar_tiempo_10anios(aux_h) == verdadero)
-    //{
-    //    agregar_un_paciente_al_archivo(aux_p[j]);
-    //}
-    //    else
-    //    {
-    //    estado_paciente = revisar_estado(aux_h[j])
-    //        if (estado_paciente == 0 || estado_paciente == 1)
-    //        {
-    //            guardar_secretaria(aux_u[j])
-    //        }
-    //        else if (estado_paciente == 2)
-    //        {
-    //            agregar_un_paciente_al_archivo(aux_p[j]);
-    //        }
-    //    }
-
-
-
-
-    // libero la memoria pedida.
     delete[] lista_de_consultas;
     delete[] lista_de_contactos;
     delete[] lista_de_medicos;

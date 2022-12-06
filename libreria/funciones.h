@@ -7,6 +7,7 @@
 #include<fstream>
 #include<ctime> 
 
+
 using namespace std;
 
 enum class ESTADO
@@ -88,7 +89,7 @@ void agregar_paciente_a_historia_clinica_irrecuperables(historia_clinica_t* list
 void cargar_estructura_irrecupeables_a_archivo_irrecuperable(historia_clinica_t* lista, int cantidad);
 bool verificar_tiempo_10anios(string  _dni_paciente);
 void agregar_paciente_a_secretaria(contactos_t* lista_secretaria, string dni,contactos_t* lista_contactos,int& cantidad);
-void mandar_archivo_a_secretaria(contactos_t* lista_a_secretaria,  int _cant_de_contactos_secretaria, pacientes_t* lista_pacientes,consultas_t* lista_consultas);
+void mandar_archivo_a_secretaria(int cant_consultas, int cant_pacientes, contactos_t* lista_a_secretaria,  int _cant_de_contactos_secretaria, pacientes_t* lista_pacientes,consultas_t* lista_consultas);
 obra_social_t* cargar_datos_de_un_archivo_a_una_estruct_obra_social(string file,obra_social_t* vector);
 
 //------------------------------

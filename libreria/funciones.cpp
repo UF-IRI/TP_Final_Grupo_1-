@@ -509,8 +509,10 @@ void agregar_paciente_a_secretaria(contactos_t* lista_secretaria, string dni, co
 		}
 	}
 }
-void mandar_archivo_a_secretaria(contactos_t* lista_a_secretaria, int _cant_de_contactos_secretaria,pacientes_t* lista_pacientes, consultas_t* lista_consultas)
+void mandar_archivo_a_secretaria(int cant_consultas,int cant_pacientes,contactos_t* lista_a_secretaria, int _cant_de_contactos_secretaria,pacientes_t* lista_pacientes, consultas_t* lista_consultas)
 {
+	string aux_obrasocial;
+	string mensaje;
 	ofstream fp;
 	srand(time(NULL));
 	int valor_para_saber_si_retorna = 0;
@@ -528,13 +530,47 @@ void mandar_archivo_a_secretaria(contactos_t* lista_a_secretaria, int _cant_de_c
 			{
 				retorna = "retorna";
 				valor_para_obras_social = 1+rand() + 7;
+				switch (valor_para_obras_social)
+				{
+				case 1: aux_obrasocial = "Medicus";
+					break;
+				case 2:aux_obrasocial ="OSDE"
+					break;
+				case 3:aux_obrasocial ="IOSFA"
+					break;
+				case 4:aux_obrasocial ="Italiano"
+					break;
+				case 5:aux_obrasocial ="Aleman"
+					break;
+				case 6:aux_obrasocial ="Espanyol"
+					break;
+				default:aux_obrasocial = "sigue con la misma bra social";
+					break;
+				}
+
 				for (int j = 0; j <cant_consultas; j++)
 				{
-					if (lista_a_secretaria[i].dni_paciente=lista_consultas[j].dni_pac)
+					if (lista_a_secretaria[i].dni_paciente==lista_consultas[j].dni_pac)
 					{
 						lista_consultas[j].fecha_turno.tm_mday = 1 + rand() + 32;
 						lista_consultas[j].fecha_turno.tm_mon == 1 + rand()+13;
 						lista_consultas[j].fecha_turno.tm_year == 2022 + rand()+2023 ;
+					}
+				}
+				for (int j = 0; j < cant_pacientes; j++)
+				{
+					if (lista_a_secretaria[i].dni_paciente==lista_pacientes[j])
+					{
+						if (lista_pacientes[j].obra_social!=aux_obrasocial)
+						{ 
+							mensaje = "su obra socail cambio y la nueva es: " + aux_obrasocial;
+							cout << "su obra socail cambio y la nueva es: " << aux_obrasocial << endl;
+						}
+						else
+						{
+							mensaje="no caambio su obra social. "
+							cout << "no caambio su obra social. " << endl;
+						}
 					}
 				}
 			}
@@ -543,10 +579,8 @@ void mandar_archivo_a_secretaria(contactos_t* lista_a_secretaria, int _cant_de_c
 				retorna = "no retorna";
 			}
 
-		fp << lista_a_secretaria[i].dni_paciente << "," << lista_a_secretaria[i].telefono << "," << lista_a_secretaria[i].celular<<"," << lista_a_secretaria[i].direccion<<"," << lista_a_secretaria[i].mail <<","<< retorna<<"," << valor_para_obras_social<< "," << lista_consultas[j].fecha_turno.tm_mday <<"," << lista_a_secretaria[i].celular << "," << lista_a_secretaria[i].direccion << "," << lista_a_secretaria[i].mail << "," << retorna << "," << valor_para_obras_social << ","<< lista_consultas[j].fecha_turno.tm_mday<<"/" << lista_consultas[j].fecha_turno.tm_mon << "/" << lista_consultas[j].fecha_turno.tm_year << endl;
+		fp << lista_a_secretaria[i].dni_paciente << "," << lista_a_secretaria[i].telefono << "," << lista_a_secretaria[i].celular<<"," << lista_a_secretaria[i].direccion<<"," << lista_a_secretaria[i].mail <<","<< retorna<<"," << valor_para_obras_social<< "," << lista_consultas[j].fecha_turno.tm_mday <<"," << lista_a_secretaria[i].celular << "," << lista_a_secretaria[i].direccion << "," << lista_a_secretaria[i].mail << "," << retorna << "," << valor_para_obras_social << ","<< lista_consultas[j].fecha_turno.tm_mday<<"/" << lista_consultas[j].fecha_turno.tm_mon << "/" << lista_consultas[j].fecha_turno.tm_year<<","<<mensaje<< endl;
 	}
-
-
 
 	fp.close();
 

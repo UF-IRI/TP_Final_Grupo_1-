@@ -1,52 +1,6 @@
 #include"dummy.h"
 
 using namespace std;
-//Consultas::Consultas()
-//{
-//	dni_pac = " ";
-//	fecha_solicitado = { 0,0,0,0,0,0,0,0,0 };
-//	fecha_turno = { 0,0,0,0,0,0,0,0,0 };
-//	presento = false;
-//	matricula_med = " ";
-//};
-
-//Historia_clinica::Historia_clinica()
-//{
-//	dni_paciente = "";
-//	fecha_ultima_cita = { 0,0,0,0,0,0,0,0,0 };
-//	cita_concurrida = false;
-//	ultimo_medico = "";
-//	estado = ESTADO::niguno;
-//};
-//Medicos::Medicos()
-//{
-//	matricula = " ";
-//	nombre = " ";
-//	apellido = " ";
-//	telefono = " ";
-//	especialidad = " ";
-//	activo = false;
-//};
-//
-//Contactos::Contactos()
-//{
-//	dni_paciente = " ";
-//	telefono = " ";
-//	celular = " ";
-//	direccion = " ";
-//	mail = " ";
-//}
-//
-//Pacientes::Pacientes()
-//{
-//	string dni = " ";
-//	string nombre = " ";
-//	string apellido = " ";
-//	sexo = '0';
-//	natalicio = { 0,0,0,0,0,0,0,0,0 };
-//	estado = ESTADO::niguno;
-//	obra_social = " ";
-//};
 
 int cantidad_de_registros(string file)
 {
@@ -55,9 +9,9 @@ int cantidad_de_registros(string file)
 	char delimitador = ',';
 	int contador = 0;
 	fp.open(file, ios::in);
-	if (fp.fail())
+	if (!fp.is_open())
 	{
-		cout << "el archivo no se pudo abrir" << endl;
+		cout << "el archivo no se pudo abrir para contar registros" << endl;
 		exit(1);
 	}
 	getline(fp, linea);
@@ -69,20 +23,24 @@ int cantidad_de_registros(string file)
 }
 //------------------------------------------
 void cargar_datos_de_un_archivo_a_una_estruct_consulta(string file, consultas_t* vector)
-{													//(archivo_consultas,lista_consultas)
+{
+	int can = 0;											//(archivo_consultas,lista_consultas)
 	int cant_registros_del_archivo = 0;
 	string linea;
 	int i = 0;
 	char delimitador = ',';
 	cant_registros_del_archivo = cantidad_de_registros(file);
+
 	vector = new consultas_t[cant_registros_del_archivo];
 
-	ifstream fp;
-	fp.open("Consultas.csv", ios::in);
+	ifstream fp;//IRI_Consultas.csv
+	fp.open("C:/Users/sando/source/repos/TP_Final_Grupo_1-/data_files/input/IRI_Consultas.csv", ios::in);
+	if (!fp.is_open())
 	{
 		cout << " error al abrir el archivo de cosultas " << endl;
 		exit(1);
 	}
+	cout << ".......";
 	getline(fp, linea); // guarda la primera fila en linea
 	while (/*!fp.eof()&&i<cant_registros_en_el_archivo*/getline(fp, linea))
 	{
@@ -111,11 +69,7 @@ void cargar_datos_de_un_archivo_a_una_estruct_consulta(string file, consultas_t*
 		vector[i].fecha_turno.tm_year = obtener_anio(_fecha_solicitado);
 		vector[i].presento = obtener_presento(presento);
 		vector[i].matricula_med = matricula;
-		i++;
-	}
-	for (int i = 0; i < cant_registros_del_archivo; i++)
-	{
-		cout << vector[i].dni_pac << delimitador << vector[i].fecha_solicitado.tm_mday << vector[i].fecha_solicitado.tm_mon << vector[i].fecha_solicitado.tm_year << delimitador << vector[i].presento << vector[i].matricula_med << endl;
+		can=i++;
 	}
 	fp.close();
 }
@@ -128,9 +82,10 @@ void cargar_datos_de_un_archivo_a_una_estruct_contactos(string file, contactos_t
 	cant_registros_del_archivo = cantidad_de_registros(file);
 	vector = new contactos_t[cant_registros_del_archivo];
 	ifstream fp;
-	fp.open("Contactos.csv", ios::in);
+	fp.open("IRI_Contactos.csv", ios::in);
+	if(!fp.is_open())
 	{
-		cout << "sante se la come " << endl;
+		cout << "no se puede abrir el archivo contactos " << endl;
 		exit(1);
 	}
 	getline(fp, linea);
@@ -173,9 +128,10 @@ void cargar_datos_de_un_archivo_a_una_estruct_medicos(string file, medicos_t* ve
 	cant_registros_del_archivo = cantidad_de_registros(file);
 	vector = new medicos_t[cant_registros_del_archivo];
 	ifstream fp;
-	fp.open("Medicos.csv", ios::in);
+	fp.open("IRI_Medicos.csv", ios::in);
+	if(!fp.is_open())
 	{
-		cout << "sante se la come " << endl;
+		cout << "no se puede abrir el archivo medicos " << endl;
 		exit(1);
 	}
 	getline(fp, linea);
@@ -225,9 +181,10 @@ void cargar_datos_de_un_archivo_a_una_estruct_pacientes(string file, pacientes_t
 	cant_registros_del_archivo = cantidad_de_registros(file);
 	vector = new pacientes_t[cant_registros_del_archivo];
 	ifstream fp;
-	fp.open("Pacientes.csv", ios::in);
+	fp.open("IRI_Pacientes.csv", ios::in);
+	if(!fp.is_open())
 	{
-		cout << "sante se la come " << endl;
+		cout << "no se puede abrir el archivo pacientes " << endl;
 		exit(1);
 	}
 	getline(fp, linea);
@@ -391,8 +348,8 @@ int obtener_estado_como_numero(string estado_paciente)
 bool verificar_tiempo_10anios(tm fecha_turno)
 {
 
-	time_t tSac = time(NULL); // instante actual
-	tm actual = *localtime(&tSac);
+	time_t tSac = time(NULL); 
+	tm actual = *localtime(&tSac);// instante actual
 	//---------------------------
 	float decada;
 	if (actual.tm_year - fecha_turno.tm_year > 10)
@@ -419,8 +376,8 @@ void agregar_paciente_a_historia_clinica_irrecuperables(historia_clinica_t* list
 		aux[i] = lista[i];
 	}
 	aux[cantidad] = paciente;
+	delete[] lista;
 	lista = aux;
-	delete[] aux;
 	cantidad++;
 }
 
@@ -447,10 +404,10 @@ void cargar_datos_de_un_archivo_a_una_estruct_obra_social(string file, obra_soci
 	cant_registros_del_archivo = cantidad_de_registros(file);
 	vector = new obra_social_t[cant_registros_del_archivo];
 	ifstream fp;
-	fp.open("ObraSocial.csv", ios::in);
+	fp.open("Iri_ObraSocial.csv", ios::in);
 	if (!fp.is_open())
 	{
-		cout << "no se puede abrir el archivo" << endl;
+		cout << "no se puede abrir el archivo obra social " << endl;
 		exit(1);
 	}
 	getline(fp, linea);
@@ -481,6 +438,7 @@ void agregar_paciente_a_secretaria(contactos_t* lista_secretaria, string dni, co
 				aux[j] = lista_secretaria[j];
 			}
 			aux[cantidad] = lista_contactos[i];
+			delete[] lista_secretaria;
 			lista_secretaria = aux;
 			cantidad++;
 			delete[] aux;

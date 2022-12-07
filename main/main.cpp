@@ -17,13 +17,14 @@ int main()
     medicos_t* lista_de_medicos = NULL;
     pacientes_t* lista_de_pacientes = NULL;
     obra_social_t* lista_obra_social = NULL;
-
+    cout << cantidad_de_registros("IRI_Consultas.csv");
     // cargo cada registro del archivo a su respectiva estructura
-    cargar_datos_de_un_archivo_a_una_estruct_consulta(archivo_Consultas, lista_de_consultas);
-    cargar_datos_de_un_archivo_a_una_estruct_contactos(archivo_Contactos, lista_de_contactos);
+    cargar_datos_de_un_archivo_a_una_estruct_consulta(archivo_Consultas, lista_de_consultas);//(nom.file ,puntero)
+   /* cargar_datos_de_un_archivo_a_una_estruct_contactos(archivo_Contactos, lista_de_contactos);
     cargar_datos_de_un_archivo_a_una_estruct_medicos(archivo_Medicos, lista_de_medicos);
     cargar_datos_de_un_archivo_a_una_estruct_pacientes(archivo_Pacientes, lista_de_pacientes);
-    cargar_datos_de_un_archivo_a_una_estruct_obra_social(archivo_Obra_Social, lista_obra_social);
+    cargar_datos_de_un_archivo_a_una_estruct_obra_social(archivo_Obra_Social, lista_obra_social);*/
+
     //-----------------------------------------------------------------------
     historia_clinica_t aux_h; //guardo las historias clinicas irrecuperables
     aux_h.dni_paciente = "";
@@ -35,7 +36,7 @@ int main()
     historia_clinica_t* lista_historia_clinica_irrecuperables= new historia_clinica_t[cant_irrecuperables];
 
     int cant_de_contactos_secretaria = 0;
-    contactos_t* lista_a_secretaria = new contactos_t[0];
+    contactos_t* lista_a_secretaria = new contactos_t[0];    //<10anio para preguntar
 
     
     for (int i = 0; i < cantidad_de_registros(archivo_Consultas); i++)
@@ -49,7 +50,7 @@ int main()
             aux_h.fecha_ultima_cita.tm_year = lista_de_consultas[i].fecha_turno.tm_year;
             aux_h.cita_concurrida = lista_de_consultas[i].presento;
             aux_h.ultimo_medico = lista_de_consultas[i].matricula_med;
-            for (int j = 0; j < cantidad_de_registros(archivo_Pacientes); j++)
+            for (int j = 0; j < cantidad_de_registros(archivo_Pacientes); j++) //comp. dni y guarda el estado
             {
                 if (lista_de_consultas[i].dni_pac==lista_de_pacientes[j].dni)
                 {

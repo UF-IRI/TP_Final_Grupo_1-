@@ -14,10 +14,7 @@ enum class ESTADO
 {
 	fallecido, internado, n_c, niguno
 };
-//enum class EstadoObraSocial
-//{ 
-//	Medicus, OSDE, IOSFA, Italiano, Aleman, Espanyol,ninguno
-//};
+
 struct Obra_Social 
 {
 	int id_os=-1;
@@ -33,7 +30,7 @@ struct Historia_clinica
 	string ultimo_medico=" "; // matricula del ultimo medico que atendia al paciente// matricula_medico -> consultas
 	//--------- tm fecha_de_reprogramacion; // el dia de reprogramacion la cita medica
 	ESTADO estado=ESTADO::niguno; // 0 si está vivo, 1 si está internado, 2 si murió// estado -> pacientes 
-	//Historia_clinica();
+
 }; typedef struct Historia_clinica historia_clinica_t;
 struct Consultas
 {
@@ -42,7 +39,7 @@ struct Consultas
 	tm fecha_turno= { 0,0,0,0,0,0,0,0,0 };
 	bool presento = false;
 	string matricula_med=" ";
-	//Consultas(); //
+
 }; typedef struct Consultas consultas_t;
 struct Contactos
 {
@@ -51,7 +48,7 @@ struct Contactos
 	string celular = " ";
 	string direccion = " ";
 	string mail = " ";
-	//Contactos();
+	
 }; typedef struct Contactos contactos_t;
 struct Medicos
 {
@@ -61,7 +58,7 @@ struct Medicos
 	string telefono=" ";
 	string especialidad=" ";
 	bool activo=false;
-	//Medicos();
+	
 }; typedef struct Medicos medicos_t;
 struct Pacientes
 {

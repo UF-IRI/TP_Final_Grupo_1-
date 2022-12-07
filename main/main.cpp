@@ -87,7 +87,6 @@ int main()
     }
 
     crear_archivo_pacientes_medico_ultima_consulta(lista_de_pacientes,lista_de_medicos,lista_de_consultas,lista_de_contactos,cantidad_de_registros(archivo_Contactos),cantidad_de_registros(archivo_Pacientes), cantidad_de_registros(archivo_Medicos), cantidad_de_registros(archivo_Consultas));
-
     delete[] lista_de_consultas;
     delete[] lista_de_contactos;
     delete[] lista_de_medicos;

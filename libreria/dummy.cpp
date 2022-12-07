@@ -539,9 +539,9 @@ void mandar_archivo_a_secretaria(int cant_consultas, int cant_pacientes, contact
 			{
 				if (lista_a_secretaria[i].dni_paciente == lista_consultas[j].dni_pac)
 				{
-					lista_consultas[j].fecha_turno.tm_mday = 1 + rand() + 32;
-					lista_consultas[j].fecha_turno.tm_mon == 1 + rand() + 13;
-					lista_consultas[j].fecha_turno.tm_year == 2022 + rand() + 2023;
+					lista_consultas[j].fecha_turno.tm_mday = 1 + rand()% 32;
+					lista_consultas[j].fecha_turno.tm_mon = 1 + rand() % 13;
+					lista_consultas[j].fecha_turno.tm_year = 2022 + rand() % 2023;
 					dia = lista_consultas[j].fecha_turno.tm_mday;
 					mes = lista_consultas[j].fecha_turno.tm_mon;
 					anio = lista_consultas[j].fecha_turno.tm_year;

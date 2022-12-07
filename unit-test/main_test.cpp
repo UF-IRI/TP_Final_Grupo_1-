@@ -1,5 +1,6 @@
 #include "gmock/gmock.h"
-#include"funciones.h"
+//#include"funciones.h"
+#include"dummy.h"
 using namespace testing;
 namespace foobar::tests 
 {

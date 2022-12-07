@@ -1,6 +1,6 @@
 #include "iri.cpp"
 #include<iostream>
-#include "funciones.h"
+#include "dummy.h"
 
 using namespace std;
 

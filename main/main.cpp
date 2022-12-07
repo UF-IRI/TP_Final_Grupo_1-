@@ -6,17 +6,17 @@ using namespace std;
 
 int main()
 {
-    string archivo_Consultas = "Consultas.csv";
-    string archivo_Contactos = "Contactos.csv";
-    string archivo_Medicos = "Medicos.csv";
-    string archivo_Pacientes = "Pacientes.csv";
-    string archivo_Obra_Social = "ObraSocial.csv";
+    string archivo_Consultas = "IRI_Consultas.csv";
+    string archivo_Contactos = "IRI_Contactos.csv";
+    string archivo_Medicos = "IRI_Medicos.csv";
+    string archivo_Pacientes = "IRI_Pacientes.csv";
+    string archivo_Obra_Social = "IRI_ObraSocial.csv";
 
-    consultas_t* lista_de_consultas = nullptr;
-    contactos_t* lista_de_contactos = nullptr;
-    medicos_t* lista_de_medicos = nullptr;
-    pacientes_t* lista_de_pacientes = nullptr;
-    obra_social_t* lista_obra_social = nullptr;
+    consultas_t* lista_de_consultas = NULL;
+    contactos_t* lista_de_contactos = NULL;
+    medicos_t* lista_de_medicos = NULL;
+    pacientes_t* lista_de_pacientes = NULL;
+    obra_social_t* lista_obra_social = NULL;
 
     // cargo cada registro del archivo a su respectiva estructura
     cargar_datos_de_un_archivo_a_una_estruct_consulta(archivo_Consultas, lista_de_consultas);
@@ -25,12 +25,9 @@ int main()
     cargar_datos_de_un_archivo_a_una_estruct_pacientes(archivo_Pacientes, lista_de_pacientes);
     cargar_datos_de_un_archivo_a_una_estruct_obra_social(archivo_Obra_Social, lista_obra_social);
     //-----------------------------------------------------------------------
-    historia_clinica_t aux_h; 
+    historia_clinica_t aux_h; //guardo las historias clinicas irrecuperables
     aux_h.dni_paciente = "";
     aux_h.fecha_ultima_cita= { 0,0,0,0,0,0,0,0,0 };
-
-
-
     aux_h.cita_concurrida = false;
     aux_h.estado = ESTADO::niguno;
     aux_h.ultimo_medico = "";
@@ -67,7 +64,7 @@ int main()
 
         } else//  pasaron menos de 10 años
         {
-            for (int j = 0; j < cantidad_de_registros(archivo_Pacientes); j++)
+            for (int j = 0; j < cantidad_de_registros(archivo_Pacientes); j++)// hasta cantidad de filas de archivo pacientes
             {
                 if (lista_de_consultas[i].dni_pac == lista_de_pacientes[j].dni)
                 {

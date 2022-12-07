@@ -22,7 +22,7 @@ namespace Casos_Base::tests {
 	TEST(testeo4, Example)
 	{
 		string aux = "7/3/2020";
-		ASSERT_TRUE(obtener_mes(aux));
+		ASSERT_TRUE(4,obtener_mes(aux));
 	}
 	TEST(testeo5, Example)
 	{

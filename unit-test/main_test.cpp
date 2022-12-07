@@ -22,12 +22,12 @@ namespace foobar::tests
 	TEST(testeo4, Example)
 	{
 		string aux = "7/3/2020";
-		ASSERT_TRUE(obtener_mes(aux));
+		ASSERT_EQ(7,obtener_mes(aux));
 	}
 	TEST(testeo5, Example)
 	{
 		string aux = "7/3/2020";
-		ASSERT_TRUE(obtener_anio(aux));
+		ASSERT_EQ(2022,obtener_anio(aux));
 	}
 	TEST(testeo6, Example)
 	{

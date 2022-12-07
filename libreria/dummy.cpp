@@ -69,23 +69,24 @@ int cantidad_de_registros(string file)
 }
 //------------------------------------------
 void cargar_datos_de_un_archivo_a_una_estruct_consulta(string file, consultas_t* vector)
-{
+{													//(archivo_consultas,lista_consultas)
 	int cant_registros_del_archivo = 0;
 	string linea;
 	int i = 0;
 	char delimitador = ',';
 	cant_registros_del_archivo = cantidad_de_registros(file);
 	vector = new consultas_t[cant_registros_del_archivo];
+
 	ifstream fp;
 	fp.open("Consultas.csv", ios::in);
 	{
 		cout << " error al abrir el archivo de cosultas " << endl;
 		exit(1);
 	}
-	getline(fp, linea);
+	getline(fp, linea); // guarda la primera fila en linea
 	while (/*!fp.eof()&&i<cant_registros_en_el_archivo*/getline(fp, linea))
 	{
-		stringstream buffer(linea);
+		stringstream buffer(linea);// buffer="451078121 , 03/08/2008 , 09/10/2008 , 1 , 01-114-7331"
 		string _dni;
 		string _fecha_solicitado;
 		string _fecha_turno;
@@ -102,9 +103,9 @@ void cargar_datos_de_un_archivo_a_una_estruct_consulta(string file, consultas_t*
 		getline(buffer, matricula, delimitador);
 
 		vector[i].dni_pac = _dni;
-		vector[i].fecha_solicitado.tm_mday = obtener_dia(_fecha_solicitado);
-		vector[i].fecha_solicitado.tm_mon = obtener_mes(_fecha_solicitado);
-		vector[i].fecha_solicitado.tm_year = obtener_anio(_fecha_solicitado);
+		vector[i].fecha_solicitado.tm_mday = obtener_dia(_fecha_solicitado);//, 03/08/2008,3
+		vector[i].fecha_solicitado.tm_mon = obtener_mes(_fecha_solicitado);//,08
+		vector[i].fecha_solicitado.tm_year = obtener_anio(_fecha_solicitado);//,2008
 		vector[i].fecha_turno.tm_mday = obtener_dia(_fecha_solicitado);
 		vector[i].fecha_turno.tm_mon = obtener_mes(_fecha_solicitado);
 		vector[i].fecha_turno.tm_year = obtener_anio(_fecha_solicitado);
@@ -288,7 +289,7 @@ void cargar_datos_de_un_archivo_a_una_estruct_pacientes(string file, pacientes_t
 	}
 	fp.close();
 }
-int obtener_dia(string cadena)
+int obtener_dia(string cadena)////, 03/08/2008
 {
 	int dia = 0;
 	int i = 0;
@@ -412,7 +413,7 @@ bool verificar_tiempo_10anios(tm fecha_turno)
 }
 void agregar_paciente_a_historia_clinica_irrecuperables(historia_clinica_t* lista, historia_clinica_t paciente, int& cantidad)
 {
-	historia_clinica_t* aux = new historia_clinica_t[cantidad + 1];
+	historia_clinica_t* aux = new historia_clinica_t[cantidad +1];
 	for (int i = 0; i < cantidad; i++)
 	{
 		aux[i] = lista[i];
@@ -512,11 +513,11 @@ void mandar_archivo_a_secretaria(int cant_consultas, int cant_pacientes, contact
 
 	for (int i = 0; i < _cant_de_contactos_secretaria; i++)
 	{
-		valor_para_saber_si_retorna = rand() + 2;
+		valor_para_saber_si_retorna = rand()% 2;// si y no 
 		if (valor_para_saber_si_retorna == 0)
 		{
 			retorna = "retorna";
-			valor_para_obras_social = 1 + rand() + 7;
+			valor_para_obras_social = 1 + rand() % 7;
 			switch (valor_para_obras_social)
 			{
 			case 1: aux_obrasocial = "Medicus";
@@ -535,7 +536,7 @@ void mandar_archivo_a_secretaria(int cant_consultas, int cant_pacientes, contact
 				break;
 			}
 
-			for (int j = 0; j < cant_consultas; j++)
+			for (int j = 0; j < cant_consultas; j++)//para estableces la nueva fecha_turno del que retorna
 			{
 				if (lista_a_secretaria[i].dni_paciente == lista_consultas[j].dni_pac)
 				{

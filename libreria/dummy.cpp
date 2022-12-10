@@ -2,13 +2,13 @@
 
 using namespace std;
 
-int cantidad_de_registros(string file)
+int cantidad_de_registros(string _file)
 {
 	ifstream fp;
 	string linea;
 	char delimitador = ',';
 	int contador = 0;
-	fp.open(file, ios::in);
+	fp.open(_file, ios::in);
 	if (!fp.is_open())
 	{
 		cout << "el archivo no se pudo abrir para contar registros" << endl;
@@ -19,60 +19,83 @@ int cantidad_de_registros(string file)
 	{
 		contador++;
 	}
+	cout << contador << endl;
 	return contador;
 }
 //------------------------------------------
-void cargar_datos_de_un_archivo_a_una_estruct_consulta(string file, consultas_t* vector)
-{
-	int can = 0;											//(archivo_consultas,lista_consultas)
-	int cant_registros_del_archivo = 0;
+consultas_t* cargar_datos_de_un_archivo_a_una_estruct_consulta(string file,consultas_t* vector)
+{											//(archivo_consultas,lista_consultas)
 	string linea;
 	int i = 0;
 	char delimitador = ',';
-	cant_registros_del_archivo = cantidad_de_registros(file);
-
-	vector = new consultas_t[cant_registros_del_archivo];
-
+	int cant = cantidad_de_registros(file);
+	
+	vector = new consultas_t[cant];
+	//consultas_t aux = {" ",{ 0,0,0,0,0,0,0,0,0 },{ 0,0,0,0,0,0,0,0,0 },false," "};
 	ifstream fp;//IRI_Consultas.csv
-	fp.open("C:/Users/sando/source/repos/TP_Final_Grupo_1-/data_files/input/IRI_Consultas.csv", ios::in);
+	fp.open(file, ios::in);
+
 	if (!fp.is_open())
 	{
 		cout << " error al abrir el archivo de cosultas " << endl;
-		exit(1);
 	}
-	cout << ".......";
-	getline(fp, linea); // guarda la primera fila en linea
-	while (/*!fp.eof()&&i<cant_registros_en_el_archivo*/getline(fp, linea))
+	else
 	{
-		stringstream buffer(linea);// buffer="451078121 , 03/08/2008 , 09/10/2008 , 1 , 01-114-7331"
-		string _dni;
-		string _fecha_solicitado;
-		string _fecha_turno;
-		string presento;
-		string matricula;
-		getline(buffer, _dni, delimitador);
+		cout << cant << endl;
+		getline(fp, linea); // guarda la primera fila en linea
+		int i = 0;
+		while (/*!fp.eof()&&i<cant_registros_en_el_archivo*/ getline(fp, linea))
+		{
+			string _dni;
+			string _fecha_solicitado;
+			string _fecha_turno;
+			string _presento;
+			string _matricula;
 
-		getline(buffer, _fecha_solicitado, delimitador);
+			stringstream buffer(linea);// buffer="451078121 , 03/08/2008 , 09/10/2008 , 1 , 01-114-7331"
 
-		getline(buffer, _fecha_turno, delimitador);
+			getline(buffer, _dni, delimitador);
 
-		getline(buffer, presento, delimitador);
+			getline(buffer, _fecha_solicitado, delimitador);
 
-		getline(buffer, matricula, delimitador);
+			getline(buffer, _fecha_turno, delimitador);
 
-		vector[i].dni_pac = _dni;
-		vector[i].fecha_solicitado.tm_mday = obtener_dia(_fecha_solicitado);//, 03/08/2008,3
-		vector[i].fecha_solicitado.tm_mon = obtener_mes(_fecha_solicitado);//,08
-		vector[i].fecha_solicitado.tm_year = obtener_anio(_fecha_solicitado);//,2008
-		vector[i].fecha_turno.tm_mday = obtener_dia(_fecha_solicitado);
-		vector[i].fecha_turno.tm_mon = obtener_mes(_fecha_solicitado);
-		vector[i].fecha_turno.tm_year = obtener_anio(_fecha_solicitado);
-		vector[i].presento = obtener_presento(presento);
-		vector[i].matricula_med = matricula;
-		can=i++;
+			getline(buffer, _presento, delimitador);
+
+			getline(buffer, _matricula, delimitador);
+			
+			vector[i].dni_pac = _dni;
+			vector[i].fecha_solicitado.tm_mday = obtener_dia(_fecha_solicitado);
+			vector[i].fecha_solicitado.tm_mon = obtener_mes(_fecha_solicitado);
+			vector[i].fecha_solicitado.tm_year = obtener_anio(_fecha_solicitado);
+			vector[i].fecha_turno.tm_mday = obtener_dia(_fecha_turno);
+			vector[i].fecha_turno.tm_mon = obtener_mes(_fecha_turno);
+			vector[i].fecha_turno.tm_year = obtener_anio(_fecha_turno);
+			vector[i].presento = obtener_presento(_presento);
+			vector[i].matricula_med = _matricula;
+			//cout << vector[i].dni_pac<<"-" <<vector[i].matricula_med<< "-"<< vector[i].fecha_solicitado.tm_mday<<"-"<< vector[i].fecha_solicitado.tm_mon <<"-"<< vector[i].fecha_solicitado.tm_year << endl;
+			i++;
+		}
 	}
 	fp.close();
+	cout << "......." << endl;
+	return vector;
 }
+//---------------------------------------------------------------
+void agregar_consulta(consultas_t* vector, consultas_t  aux, int* tamanio) 
+{
+	/*int uno = 1;
+	consultas_t* list_aux = new consultas_t[*tamanio +uno];
+	for (int i  = 0;  i< *tamanio-1; i++)
+	{
+			list_aux[i] = vector[i];
+	}
+	list_aux[*tamanio] = aux;
+	delete[] vector;
+	vector = list_aux;
+	tamanio++;*/
+}
+/*
 void cargar_datos_de_un_archivo_a_una_estruct_contactos(string file, contactos_t* vector)
 {
 	int cant_registros_del_archivo = 0;
@@ -82,7 +105,7 @@ void cargar_datos_de_un_archivo_a_una_estruct_contactos(string file, contactos_t
 	cant_registros_del_archivo = cantidad_de_registros(file);
 	vector = new contactos_t[cant_registros_del_archivo];
 	ifstream fp;
-	fp.open("IRI_Contactos.csv", ios::in);
+	fp.open(file, ios::in);
 	if(!fp.is_open())
 	{
 		cout << "no se puede abrir el archivo contactos " << endl;
@@ -128,7 +151,7 @@ void cargar_datos_de_un_archivo_a_una_estruct_medicos(string file, medicos_t* ve
 	cant_registros_del_archivo = cantidad_de_registros(file);
 	vector = new medicos_t[cant_registros_del_archivo];
 	ifstream fp;
-	fp.open("IRI_Medicos.csv", ios::in);
+	fp.open(file, ios::in);
 	if(!fp.is_open())
 	{
 		cout << "no se puede abrir el archivo medicos " << endl;
@@ -181,7 +204,7 @@ void cargar_datos_de_un_archivo_a_una_estruct_pacientes(string file, pacientes_t
 	cant_registros_del_archivo = cantidad_de_registros(file);
 	vector = new pacientes_t[cant_registros_del_archivo];
 	ifstream fp;
-	fp.open("IRI_Pacientes.csv", ios::in);
+	fp.open(file, ios::in);
 	if(!fp.is_open())
 	{
 		cout << "no se puede abrir el archivo pacientes " << endl;
@@ -245,7 +268,7 @@ void cargar_datos_de_un_archivo_a_una_estruct_pacientes(string file, pacientes_t
 		i++;
 	}
 	fp.close();
-}
+}*/
 int obtener_dia(string cadena)////, 03/08/2008
 {
 	int dia = 0;
@@ -323,7 +346,7 @@ bool obtener_presento(string cadena)
 		return true;
 	}
 }
-
+/*
 int obtener_estado_como_numero(string estado_paciente)
 {
 	if (estado_paciente == "fallecido")
@@ -404,7 +427,7 @@ void cargar_datos_de_un_archivo_a_una_estruct_obra_social(string file, obra_soci
 	cant_registros_del_archivo = cantidad_de_registros(file);
 	vector = new obra_social_t[cant_registros_del_archivo];
 	ifstream fp;
-	fp.open("Iri_ObraSocial.csv", ios::in);
+	fp.open(file, ios::in);
 	if (!fp.is_open())
 	{
 		cout << "no se puede abrir el archivo obra social " << endl;
@@ -585,3 +608,4 @@ void crear_archivo_pacientes_medico_ultima_consulta(pacientes_t* list_pacientes,
 	fp.close();
 }
 
+*/

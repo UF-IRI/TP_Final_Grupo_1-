@@ -19,7 +19,6 @@ int cantidad_de_registros(string _file)
 	{
 		contador++;
 	}
-	cout << contador << endl;
 	return contador;
 }
 //------------------------------------------
@@ -95,8 +94,8 @@ void agregar_consulta(consultas_t* vector, consultas_t  aux, int* tamanio)
 	vector = list_aux;
 	tamanio++;*/
 }
-/*
-void cargar_datos_de_un_archivo_a_una_estruct_contactos(string file, contactos_t* vector)
+
+contactos_t* cargar_datos_de_un_archivo_a_una_estruct_contactos(string file, contactos_t* vector)
 {
 	int cant_registros_del_archivo = 0;
 	string linea;
@@ -112,7 +111,7 @@ void cargar_datos_de_un_archivo_a_una_estruct_contactos(string file, contactos_t
 		exit(1);
 	}
 	getline(fp, linea);
-
+	cout << "la cantidad de registro de contactos es: " << cant_registros_del_archivo << endl;
 	while (getline(fp, linea))
 	{
 		stringstream buffer(linea);
@@ -140,9 +139,11 @@ void cargar_datos_de_un_archivo_a_una_estruct_contactos(string file, contactos_t
 		i++;
 	}
 	fp.close();
+	return vector;
 }
 //------------------------------------------------------------
-void cargar_datos_de_un_archivo_a_una_estruct_medicos(string file, medicos_t* vector)
+
+medicos_t* cargar_datos_de_un_archivo_a_una_estruct_medicos(string file, medicos_t* vector)
 {
 	int cant_registros_del_archivo = 0;
 	string linea;
@@ -157,6 +158,7 @@ void cargar_datos_de_un_archivo_a_una_estruct_medicos(string file, medicos_t* ve
 		cout << "no se puede abrir el archivo medicos " << endl;
 		exit(1);
 	}
+	cout << " cantidad de registros de archivo medicos: " << cant_registros_del_archivo << endl;
 	getline(fp, linea);
 
 	while (getline(fp, linea))
@@ -191,10 +193,11 @@ void cargar_datos_de_un_archivo_a_una_estruct_medicos(string file, medicos_t* ve
 		i++;
 	}
 	fp.close();
-
+	return vector;
 }
 //-------------------------------------------
-void cargar_datos_de_un_archivo_a_una_estruct_pacientes(string file, pacientes_t* vector)
+
+pacientes_t* cargar_datos_de_un_archivo_a_una_estruct_pacientes(string file, pacientes_t* vector)
 {
 	int aux_estado = 3;
 	int cant_registros_del_archivo = 0;
@@ -248,27 +251,29 @@ void cargar_datos_de_un_archivo_a_una_estruct_pacientes(string file, pacientes_t
 		vector[i].natalicio.tm_mon = obtener_mes(_natalicio);
 		vector[i].natalicio.tm_year = obtener_anio(_natalicio);
 		aux_estado = obtener_estado_como_numero(_estado);
+
 		switch (aux_estado)
 		{
 		case 0:
 			vector[i].estado = ESTADO::fallecido;
+			//cout << "el estado ingresado es falecido." << endl;
 			break;
 		case 1:
 			vector[i].estado = ESTADO::internado;
+			//cout << "el estado ingresado es internaod." << endl;
 			break;
 		case 2:
 			vector[i].estado = ESTADO::n_c;
-			break;
-		case 3:
-			vector[i].estado = ESTADO::niguno;
-			cout << "el estado ingresado es incorrecto." << endl;
+			//cout << "el estado ingresado es n_c." << endl;
 			break;
 		}
 		vector[i].obra_social = _obra_social;
 		i++;
 	}
 	fp.close();
-}*/
+	return vector;
+}
+
 int obtener_dia(string cadena)////, 03/08/2008
 {
 	int dia = 0;
@@ -337,7 +342,7 @@ int obtener_anio(string cadena)
 
 bool obtener_presento(string cadena)
 {
-	if (cadena[0] == '0')
+	if (cadena[1] == '0')
 	{
 		return false;
 	}
@@ -346,64 +351,84 @@ bool obtener_presento(string cadena)
 		return true;
 	}
 }
-/*
+
 int obtener_estado_como_numero(string estado_paciente)
 {
-	if (estado_paciente == "fallecido")
+	if (estado_paciente == " fallecido ")
 	{
 		return 0;
 	}
-	else if (estado_paciente == "internado")
+	else if (estado_paciente == " internado ")
 	{
 		return 1;
 	}
-	else if (estado_paciente == "n_c")
+	else //if (estado_paciente == " n_c ")
 	{
 		return 2;
 	}
-	else
-	{
-		return 3;
-	}
-	return 4;
 }
+
 //--------------------------------------------
 bool verificar_tiempo_10anios(tm fecha_turno)
 {
+	time_t t = time(0);      // get time now
+	tm* actual= localtime(&t);
+	int diferencia = 0;
+	/*cout << (now->tm_year + 1900) << '-'
+		<< (now->tm_mon + 1) << '-'
+		<< now->tm_mday
+		<< "\n";*/
+	//--------------------------
+	if (((actual->tm_year + 1900) - fecha_turno.tm_year) > 10)
+	{
+		return true;
 
-	time_t tSac = time(NULL); 
-	tm actual = *localtime(&tSac);// instante actual
-	//---------------------------
-	float decada;
-	if (actual.tm_year - fecha_turno.tm_year > 10)
-	{
-		return true;
 	}
-	else if (actual.tm_year - fecha_turno.tm_year == 10 && fecha_turno.tm_mon - actual.tm_mon <= 0)
+	else if (((actual->tm_year + 1900) - fecha_turno.tm_year) == 10)
 	{
-		return true;
-	}
-	else if (actual.tm_year - fecha_turno.tm_year == 10 && actual.tm_mon - fecha_turno.tm_mon == 0 && actual.tm_mday - fecha_turno.tm_mday <= 0)
+		if ((actual->tm_mon + 1)>fecha_turno.tm_mon)
+		{
+			return true;
+		}
+		else if((actual->tm_mon + 1) == fecha_turno.tm_mon)
+		{
+			if (actual->tm_mday>fecha_turno.tm_mday)
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+		else
+		{
+			return false;
+		}
+	}else//((actual->tm_year + 1900) - fecha_turno.tm_year) < 10)
 	{
-		return true;
-	}
-	else {
 		return false;
 	}
-}
-void agregar_paciente_a_historia_clinica_irrecuperables(historia_clinica_t* lista, historia_clinica_t paciente, int& cantidad)
-{
-	historia_clinica_t* aux = new historia_clinica_t[cantidad +1];
-	for (int i = 0; i < cantidad; i++)
-	{
-		aux[i] = lista[i];
-	}
-	aux[cantidad] = paciente;
-	delete[] lista;
-	lista = aux;
-	cantidad++;
+	
 }
 
+void agregar_paciente_a_historia_clinica_irrecuperables(historia_clinica_t*& lista, historia_clinica_t historia_clinica_para_agregar, int* tamanio_actual)
+{
+	*tamanio_actual = *tamanio_actual + 1;
+	int i = 0;
+	historia_clinica_t* aux = new historia_clinica_t[*tamanio_actual];
+	while (i < *tamanio_actual - 1 && *tamanio_actual - 1 != 0) {
+		aux[i] = lista[i];
+		i++;
+	}
+
+	aux[i] = historia_clinica_para_agregar;
+	delete[] lista;
+	lista = aux;
+	return;
+}
+
+/*
 void cargar_estructura_irrecupeables_a_archivo_irrecuperable(historia_clinica_t* lista, int cantidad) //agrega un paciente al archivo de irrecuperables
 {
 	ofstream fp;
@@ -448,29 +473,23 @@ void cargar_datos_de_un_archivo_a_una_estruct_obra_social(string file, obra_soci
 	}
 	fp.close();
 }
-
-void agregar_paciente_a_secretaria(contactos_t* lista_secretaria, string dni, contactos_t* lista_contactos, int& cantidad)
+*/
+void agregar_contacto_a_la_lista_de_secretaria(contactos_t*& lista_secretaria, contactos_t aux_contacto, int* cantidad)
 {
-	contactos_t* aux = new contactos_t[cantidad + 1];
-	for (int i = 0; i <cantidad ; i++)
-	{
-		if (lista_contactos[i].dni_paciente == dni)
-		{
-			for (int j = 0; j < cantidad; j++)
-			{
-				aux[j] = lista_secretaria[j];
-			}
-			aux[cantidad] = lista_contactos[i];
-			delete[] lista_secretaria;
-			lista_secretaria = aux;
-			cantidad++;
-			delete[] aux;
-		}
-		else {
-			cout << "no se encontro el dni en el archivo consultas." << endl;
-		}
+	int i = 0;
+	*cantidad = *cantidad + 1;
+	contactos_t* aux = new contactos_t[*cantidad];
+	while (i < *cantidad - 1 && *cantidad - 1 != 0) {
+		aux[i] = lista_secretaria[i];
+		i++;
 	}
-}
+
+	aux[i] = aux_contacto;
+	delete[] lista_secretaria;
+	lista_secretaria = aux;
+	return;
+
+}/*
 void mandar_archivo_a_secretaria(int cant_consultas, int cant_pacientes, contactos_t* lista_a_secretaria, int _cant_de_contactos_secretaria, pacientes_t* lista_pacientes, consultas_t* lista_consultas)
 {
 	int dia=0;

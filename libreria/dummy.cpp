@@ -12,7 +12,6 @@ int cantidad_de_registros(string _file)
 	if (!fp.is_open())
 	{
 		cout << "el archivo no se pudo abrir para contar registros" << endl;
-		exit(1);
 	}
 	getline(fp, linea);
 	while (getline(fp, linea))
@@ -62,8 +61,8 @@ consultas_t* cargar_datos_de_un_archivo_a_una_estruct_consulta(string file,consu
 			getline(buffer, _presento, delimitador);
 
 			getline(buffer, _matricula, delimitador);
-		
-			if (Comprobacion_dni(&_dni) == false)
+
+			if (Comprobacion_dni(_dni) == false)
 			{
 				vector[i].dni_pac = _dni;
 			}
@@ -112,7 +111,6 @@ contactos_t* cargar_datos_de_un_archivo_a_una_estruct_contactos(string file, con
 	if(!fp.is_open())
 	{
 		cout << "no se puede abrir el archivo contactos " << endl;
-		exit(1);
 	}
 	getline(fp, linea);
 	cout << "la cantidad de registro de contactos es: " << cant_registros_del_archivo << endl;
@@ -160,15 +158,15 @@ medicos_t* cargar_datos_de_un_archivo_a_una_estruct_medicos(string file, medicos
 	if(!fp.is_open())
 	{
 		cout << "no se puede abrir el archivo medicos " << endl;
-		exit(1);
 	}
+
 	cout << " cantidad de registros de archivo medicos: " << cant_registros_del_archivo << endl;
 	getline(fp, linea);
 
+	
 	while (getline(fp, linea))
 	{
 		stringstream buffer(linea);
-
 		string _matricula;
 		string _nombre;
 		string _apellido;
@@ -215,7 +213,6 @@ pacientes_t* cargar_datos_de_un_archivo_a_una_estruct_pacientes(string file, pac
 	if(!fp.is_open())
 	{
 		cout << "no se puede abrir el archivo pacientes " << endl;
-		exit(1);
 	}
 	getline(fp, linea);
 
@@ -452,7 +449,6 @@ void cargar_estructura_irrecupeables_a_archivo_irrecuperable(historia_clinica_t*
 	if (!fp.is_open())
 	{ 
 		cout << "el archivo no se puede abrir." << endl;
-		exit(1);
 	}
 	for (int i = 0; i < *cantidad; i++)
 	{
@@ -492,7 +488,6 @@ void cargar_datos_de_un_archivo_a_una_estruct_obra_social(string file, obra_soci
 	if (!fp.is_open())
 	{
 		cout << "no se puede abrir el archivo obra social " << endl;
-		exit(1);
 	}
 	getline(fp, linea);
 	while (getline(fp, linea))
@@ -560,7 +555,6 @@ void mandar_archivo_a_secretaria(int cant_consultas, int cant_pacientes, contact
 	if (!fp1.is_open())
 	{
 		cout << "no se pudo abrir archivo contactos_de_secretaria.txt." << endl;
-		exit(1);
 	}
 
 	for (int i = 0; i < _cant_de_contactos_secretaria; i++)
@@ -693,14 +687,23 @@ void crear_archivo_pacientes_medico_ultima_consulta(pacientes_t*& list_pacientes
 	}
 	fp.close();
 }
-bool Comprobacion_dni(string* _dni)
+bool Comprobacion_dni(string const& _dni)
 {
-	char* p;
-	strtol(_dni->c_str(), &p, 10);
-	return *p == 0;
-	// *p-> 0;// Devuelve 1 si son numeros y 0 si hay una letra
-}
+	auto it = find_if(_dni.begin(), _dni.end(), [](char const& c) {
+		return !isdigit(c);
+		});
 
+	return !_dni.empty() && it == _dni.end();
+	/*char* p;
+	strtol(_dni.c_str(), &p, 11);
+	return *p == 0;*/
+}
+//bool isNumeric(std::string const& str)
+//{
+//	char* p;
+//	strtol(str.c_str(), &p, 10);
+//	return *p == 0;
+//}
 
 
 

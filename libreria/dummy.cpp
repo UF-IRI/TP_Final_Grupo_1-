@@ -39,7 +39,8 @@ consultas_t* cargar_datos_de_un_archivo_a_una_estruct_consulta(string file,consu
 	}
 	else
 	{
-		cout << cant << endl;
+
+		cout << "la cantidad de registro de consultas es: " << cant << endl;
 		getline(fp, linea); // guarda la primera fila en linea
 		int i = 0;
 		while (/*!fp.eof()&&i<cant_registros_en_el_archivo*/ getline(fp, linea))
@@ -80,7 +81,6 @@ consultas_t* cargar_datos_de_un_archivo_a_una_estruct_consulta(string file,consu
 		}
 	}
 	fp.close();
-	cout << "......." << endl;
 	return vector;
 }
 //---------------------------------------------------------------
@@ -214,6 +214,7 @@ pacientes_t* cargar_datos_de_un_archivo_a_una_estruct_pacientes(string file, pac
 	{
 		cout << "no se puede abrir el archivo pacientes " << endl;
 	}
+	cout << " cantidad de registros de archivo pacientes: " << cant_registros_del_archivo << endl;
 	getline(fp, linea);
 
 	while (getline(fp, linea))

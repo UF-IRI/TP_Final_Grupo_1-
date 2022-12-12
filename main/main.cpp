@@ -8,46 +8,48 @@
 using namespace std;
 
 int main() {
-       //------------------------------------ guarda la ruta a 
+       //------------------------------------ guarda la ruta a a de los archivos csv
     string archivo_consultas = "C:\\Users\\sando\\source\\repos\\TP_Final_Grupo_1-\\data_files\\input\\IRI_Consultas.csv";
     string archivo_contactos = "C:\\Users\\sando\\source\\repos\\TP_Final_Grupo_1-\\data_files\\input\\IRI_Contactos.csv";
     string archivo_medicos = "C:\\Users\\sando\\source\\repos\\TP_Final_Grupo_1-\\data_files\\input\\IRI_Medicos.csv";
     string archivo_pacientes = "C:\\Users\\sando\\source\\repos\\TP_Final_Grupo_1-\\data_files\\input\\IRI_Pacientes.csv";
 
-    //--------------------------------------------------------------
+    //---------------------------------------- creamos punteros simples apntando a nullptr, puesto que esto van a representar nuestras listas despues de pedir memoria dinamica
     consultas_t* list_consultas = nullptr;
     contactos_t* list_contactos = nullptr;
     medicos_t* list_medicos = nullptr;
     pacientes_t* list_pacientes = nullptr;
-
+    //--------------------------------------- guardamos la cantidad de registros que contiene cada archivo csv ------------------
     int cant_consultas = cantidad_de_registros(archivo_consultas);
     int cant_pacientes = cantidad_de_registros(archivo_pacientes);
     int cant_contactos = cantidad_de_registros(archivo_contactos);
     int cant_medicos = cantidad_de_registros(archivo_medicos);
-    //----------------------------------------------------------------------------------------------------
+    //-------------- cada una de esta funcion pide memoria dinamica y las carga con lo registros que contiene cada archivo  -----------------------------------------------------------
     list_consultas = cargar_datos_de_un_archivo_a_una_estruct_consulta(archivo_consultas, list_consultas);
     list_contactos = cargar_datos_de_un_archivo_a_una_estruct_contactos(archivo_contactos, list_contactos);
     list_medicos = cargar_datos_de_un_archivo_a_una_estruct_medicos(archivo_medicos, list_medicos);
     list_pacientes = cargar_datos_de_un_archivo_a_una_estruct_pacientes(archivo_pacientes, list_pacientes);
 
-    //----------------------------------------------------------------------------------------------------- 
+    //------------------------------------------ imprimo la losta consultas una ves cargada la estructura list_consultas ----------------------------------------------------------- 
      cout << "---------------------------lista de consultas---------------------------------------------------" << endl;
      for (int i = 0; i < cant_consultas; i++)
      {
          cout << list_consultas[i].dni_pac << " - " << list_consultas[i].fecha_solicitado.tm_mday << "/" << list_consultas[i].fecha_solicitado.tm_mon << "/" << list_consultas[i].fecha_solicitado.tm_year <<" - " << list_consultas[i].fecha_turno.tm_mday << "/" << list_consultas[i].fecha_turno.tm_mon << "/" << list_consultas[i].fecha_turno.tm_year << " - " << list_consultas[i].presento << " - " << list_consultas[i].matricula_med << endl;
      }
-     //------------------------------------------------------------------------------------------------------
+     //------------------------------------------imprimo la losta consultas una ves cargada la estructura list_contactos ------------------------------------------------------------
       cout << "--------------------------listas contactos--------------------------------------------------" << endl;
     for (int i = 0; i < cant_contactos; i++)
     {
         cout << list_contactos[i].dni_paciente << " - " << list_contactos[i].telefono << " - " << list_contactos[i].celular << " - " << list_contactos[i].direccion << " - " << list_contactos[i].mail << endl;
         //cout << list_consultas[i].dni_pac << " - " << list_consultas[i].fecha_solicitado.tm_mday << "/" << list_consultas[i].fecha_solicitado.tm_mon << "/" << list_consultas[i].fecha_solicitado.tm_year <<" - " << list_consultas[i].fecha_turno.tm_mday << "/" << list_consultas[i].fecha_turno.tm_mon << "/" << list_consultas[i].fecha_turno.tm_year << " - " << list_consultas[i].presento << " - " << list_consultas[i].matricula_med << endl;
     }
+    //--------------------------imprimo la losta consultas una ves cargada la estructura list_medicos-------------------------
      cout << "-------------------------- lista de medicos --------------------------------------------------" << endl;
     for (int i = 0; i < cant_medicos; i++)
      {
          cout << list_medicos[i].matricula<< " - "<< list_medicos[i].nombre<<" - "<< list_medicos[i].apellido<<" - "<< list_medicos[i].telefono<<" - "<< list_medicos[i].especialidad<<" - "<< list_medicos[i].activo << endl;
      }
+    //------------------------------------------imprimo la losta consultas una ves cargada la estructura list_pacientes--------------------------
      cout << "-------------------------- lista de pacientes --------------------------------------------------" << endl;
      for (int i = 0; i < cant_pacientes; i++)
      {
@@ -56,7 +58,7 @@ int main() {
     cout << "----------------------------------------- consignas---------------------------------------" << endl;
     //--------------------------------------------- resolviendo las consignas ---------------------------
 
-    historia_clinica_t aux_h; //guardo las historias clinicas irrecuperables
+    historia_clinica_t aux_h; //guardo una historia clinica auxiliar de irrecuperables para luegro agregarla a la estructura de irrecuperables.
     aux_h.dni_paciente = "";
     aux_h.fecha_ultima_cita = { 0,0,0,0,0,0,0,0,0 };
     aux_h.cita_concurrida = false;
@@ -95,7 +97,7 @@ int main() {
                     aux_h.estado = list_pacientes[j].estado;
                 }
             }
-            
+            //------------------------ agregamos una historia clinica a una a la estructura de irrecuperables----------------
              agregar_paciente_a_historia_clinica_irrecuperables(lista_historia_clinica_irrecuperables, aux_h, &cant_irrecuperables);
 
         }
@@ -125,34 +127,35 @@ int main() {
                         aux_h.cita_concurrida = list_consultas[i].presento;
                         aux_h.ultimo_medico = list_consultas[i].matricula_med;
                         aux_h.estado = ESTADO::fallecido;
+                        //------------------------ agregamos una historia clinica a una a la estructura de irrecuperables------------------------
                          agregar_paciente_a_historia_clinica_irrecuperables(lista_historia_clinica_irrecuperables, aux_h, &cant_irrecuperables);
                     }
                     else
-                    {
+                    {//------------------------ agregamos un contacto a la listas lista_secretaria para enviar a secretaria y esta se comunique con el paciente para saber si retorna ---------------
                       agregar_contacto_a_la_lista_de_secretaria(lista_a_secretaria, aux_contacto, &cant_de_contactos_secretaria);//
                     }
                 }
             }
         }
     }
-    //------------------------------------------------------------------------------------------------------------------------------
+    //----------------------------------  imprimir la lista de irrecuperables desde la estructrua --------------------------------------------------------------------------------------------
     cout << "--------------------lista de los irrecuperables--------------------------------------------------------------" << endl;
 
    for (int k = 0; k < cant_irrecuperables; k++)
    {
        cout << lista_historia_clinica_irrecuperables[k].dni_paciente << " - " << lista_historia_clinica_irrecuperables[k].fecha_ultima_cita.tm_mday << "/" << lista_historia_clinica_irrecuperables[k].fecha_ultima_cita.tm_mon << "/" << lista_historia_clinica_irrecuperables[k].fecha_ultima_cita.tm_year << " - " << lista_historia_clinica_irrecuperables[k].cita_concurrida << " - " << lista_historia_clinica_irrecuperables[k].ultimo_medico << endl;
    }
-    //------------------------------------------------------------------------------------------------------------------
+    //---------------imprimi la lista de estruturas del tipo contactos que se le pasa a secretaria para que se coomunique la secretaria para saber si retorna --------------------------------------------------------------------------
    cout << "--------------------lista de aquellos que no pasaron de 10 años y no fueron a la consulta que estan vivos----------------------------- " << endl;
 
      for (int k = 0; k < cant_de_contactos_secretaria; k++)
      {
          cout << lista_a_secretaria[k].dni_paciente << " - " << lista_a_secretaria[k].telefono << " - " << lista_a_secretaria[k].celular << " - " << lista_a_secretaria[k].direccion << " - " << lista_a_secretaria[k].mail << endl;
      }
-    //------------------------------------------------------------------------------------------------------------------
-   cout << "------------------------ cargo la lista de irrecuperables y lo mando a secretaria --------------------------------------" << endl;
+    //-------------- ---------------------------------------------------------------------------------------------------
+   cout << "------------------------ cargo la lista de irrecuperables a un archivo y lo mando a secretaria --------------------------------------" << endl;
      cargar_estructura_irrecupeables_a_archivo_irrecuperable(lista_historia_clinica_irrecuperables, &cant_irrecuperables);
-     cout << "---------------------------------- imprimo irrecuperabes.txt --------------------------------" << endl;
+     cout << "---------------------------------- imprimo la lista de irrecuperabes.txt desde el archivo --------------------------------" << endl;
      imprimir_archivo("irrecuperables.txt");
     //-------------------------------------------------------------------------------------------------------------------
 
@@ -160,11 +163,11 @@ int main() {
    {
        cout << lista_a_secretaria[i].dni_paciente << endl;
    }
-   cout << "---------------------------------- cargo la lista de contactos a secretaria para que esta se comunique con cada paciente --------------------------------" << endl;
+   cout << "---------------------------------- cargo la lista de contactos en un archivoy se envia a secretaria para que esta se comunique con cada paciente --------------------------------" << endl;
      crear_archivo_pacientes_medico_ultima_consulta(list_pacientes, &cant_pacientes,list_consultas,&cant_consultas, lista_a_secretaria,&cant_de_contactos_secretaria,list_medicos,&cant_medicos);
      cout << "-------------------------------------- imprima  archivo_paciente_medico_y_ultima_consulta.txt que se envia a secretaria -----------------------------" << endl;
      imprimir_archivo("archivo_paciente_medico_y_ultima_consulta.txt");
-   cout << "------------------------------------------ casi casi fin -----------------------------------------" << endl;
+   cout << "------------------------------------------ -----------------------------------------" << endl;
     mandar_archivo_a_secretaria(cant_consultas, cant_pacientes, lista_a_secretaria, cant_de_contactos_secretaria, list_pacientes, list_consultas);
     imprimir_archivo("contactos_de_secretaria.txt");
     cout << "fin" << endl;

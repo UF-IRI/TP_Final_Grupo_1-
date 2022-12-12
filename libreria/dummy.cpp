@@ -247,6 +247,7 @@ pacientes_t* cargar_datos_de_un_archivo_a_una_estruct_pacientes(string file, pac
 		vector[i].nombre = _nombre;
 		vector[i].apellido = _apellido;
 		vector[i].sexo = _sexo;
+		
 		vector[i].natalicio.tm_mday = obtener_dia(_natalicio);
 		vector[i].natalicio.tm_mon = obtener_mes(_natalicio);
 		vector[i].natalicio.tm_year = obtener_anio(_natalicio);
@@ -428,21 +429,41 @@ void agregar_paciente_a_historia_clinica_irrecuperables(historia_clinica_t*& lis
 	return;
 }
 
-/*
-void cargar_estructura_irrecupeables_a_archivo_irrecuperable(historia_clinica_t* lista, int cantidad) //agrega un paciente al archivo de irrecuperables
+
+void cargar_estructura_irrecupeables_a_archivo_irrecuperable(historia_clinica_t*& lista, int* cantidad) //agrega un paciente al archivo de irrecuperables
 {
-	ofstream fp;
-	fp.open("irrecuperables.txt", ios::app);
+	fstream fp;
+	fp.open("irrecuperables.txt", ios::out);//  ios::out||ios::app
 	if (!fp.is_open())
-	{
+	{ 
+		cout << "el archivo no se puede abrir." << endl;
 		exit(1);
 	}
-	for (int i = 0; i < cantidad; i++)
+	for (int i = 0; i < *cantidad; i++)
 	{
-		//fp << lista[i].dni_paciente << "," << lista[i].cita_concurrida << "," << lista[i].estado << "," << lista[i].fecha_ultima_cita.tm_mday << "/" << lista[i].fecha_ultima_cita.tm_mon << "/" << lista[i].fecha_ultima_cita.tm_year << lista[i].ultimo_medico << "--->archivado" << endl;
+		fp << lista[i].dni_paciente << " - " << lista[i].fecha_ultima_cita.tm_mday << "/" << lista[i].fecha_ultima_cita.tm_mon << "/" << lista[i].fecha_ultima_cita.tm_year << " - " << lista[i].cita_concurrida << " - " << lista[i].ultimo_medico << endl;
 	}
 	fp.close();
 }
+void imprimir_archivo(string archivo)
+{
+	ifstream fp;
+	string linea;
+	fp.open(archivo, ios::in);
+	if (!fp.is_open())
+	{
+		cout << "el archivo de irrecuperables no se pudo abrir. " << endl;
+	}
+	else
+	{
+		while (getline(fp, linea))
+		{
+			cout << linea << endl;
+		}
+	}
+	fp.close();
+}
+/*
 void cargar_datos_de_un_archivo_a_una_estruct_obra_social(string file, obra_social_t* vector)
 {
 	int cant_registros_del_archivo = 0;
@@ -489,8 +510,8 @@ void agregar_contacto_a_la_lista_de_secretaria(contactos_t*& lista_secretaria, c
 	lista_secretaria = aux;
 	return;
 
-}/*
-void mandar_archivo_a_secretaria(int cant_consultas, int cant_pacientes, contactos_t* lista_a_secretaria, int _cant_de_contactos_secretaria, pacientes_t* lista_pacientes, consultas_t* lista_consultas)
+}
+void mandar_archivo_a_secretaria(int cant_consultas, int cant_pacientes, contactos_t*& lista_a_secretaria, int _cant_de_contactos_secretaria, pacientes_t*& lista_pacientes, consultas_t*& lista_consultas)
 {
 	int dia=0;
 	int mes=0;
@@ -499,11 +520,12 @@ void mandar_archivo_a_secretaria(int cant_consultas, int cant_pacientes, contact
 	string mensaje;
 	ofstream fp1;
 	srand(time(NULL));
-	int valor_para_saber_si_retorna = 0;
-	int valor_para_obras_social = 0;
+	
+	 int valor_para_saber_si_retorna = 0;
+	int valor_para_obras_social =0;
 	string retorna;
 
-	fp1.open("contactos_de_secretaria.txt", ios::app);
+	fp1.open("contactos_de_secretaria.txt", ios::out);
 	//fp2.open("archivo_paciente_medico_y_ultima_consulta",ios::app);
 	if (!fp1.is_open())
 	{
@@ -542,7 +564,7 @@ void mandar_archivo_a_secretaria(int cant_consultas, int cant_pacientes, contact
 				{
 					lista_consultas[j].fecha_turno.tm_mday = 1 + rand()% 32;
 					lista_consultas[j].fecha_turno.tm_mon = 1 + rand() % 13;
-					lista_consultas[j].fecha_turno.tm_year = 2022 + rand() % 2023;
+					lista_consultas[j].fecha_turno.tm_year = 2022 + rand() % 2024;
 					dia = lista_consultas[j].fecha_turno.tm_mday;
 					mes = lista_consultas[j].fecha_turno.tm_mon;
 					anio = lista_consultas[j].fecha_turno.tm_year;
@@ -560,7 +582,7 @@ void mandar_archivo_a_secretaria(int cant_consultas, int cant_pacientes, contact
 					else
 					{
 						mensaje = "no caambio su obra social. ";
-							cout << "no caambio su obra social. " << endl;
+						cout << "no caambio su obra social. " << endl;
 					}
 				}
 			}
@@ -570,7 +592,7 @@ void mandar_archivo_a_secretaria(int cant_consultas, int cant_pacientes, contact
 			retorna = "no retorna";
 		}
 
-		fp1 << lista_a_secretaria[i].dni_paciente << "," << lista_a_secretaria[i].telefono << "," << lista_a_secretaria[i].celular << "," << lista_a_secretaria[i].direccion << "," << lista_a_secretaria[i].mail << "," << retorna << "," << valor_para_obras_social << "," << "," << lista_a_secretaria[i].celular << "," << lista_a_secretaria[i].direccion << "," << lista_a_secretaria[i].mail << "," << retorna << "," << valor_para_obras_social << "," << dia<< "/" << mes << "/" << anio << "," << mensaje << endl;
+		fp1 << lista_a_secretaria[i].dni_paciente << "," << lista_a_secretaria[i].telefono << "," << lista_a_secretaria[i].celular << "," << lista_a_secretaria[i].direccion << "," << lista_a_secretaria[i].mail << "," << retorna << "," << valor_para_obras_social << "," << dia<< "/" << mes << "/" << anio << "," << mensaje << endl;
 
 	}
 
@@ -578,53 +600,70 @@ void mandar_archivo_a_secretaria(int cant_consultas, int cant_pacientes, contact
 
 }
 
-void crear_archivo_pacientes_medico_ultima_consulta(pacientes_t* list_pacientes, medicos_t* list_medicos, consultas_t* list_consultas, contactos_t* list_contactos, int cant_contactos, int cant_pac, int cant_med, int cant_consul)
+void crear_archivo_pacientes_medico_ultima_consulta(pacientes_t*& list_pacientes, int* cant_pac, consultas_t*& list_consultas,int* cant_consul, contactos_t*& list_contactos_secretaria, int* cant_contactos_secretaria,medicos_t*& list_medicos,int* cant_medicos )
 {
 	ofstream fp;
-	char coma = ',';
-	string _nombre;
-	string _apellido;
-	string _telefono;
+	char coma = ';';
+	string _dni_paciente;
+	string _nombre_paciente;//--
+	string _apellido_paciente;//--
+	string _telefono_paciente;//----
+
+	string _nombre_medico;
+	string _apellido_medico;
+	string _telefono_medico;
 	string _matricula_medico;
-	string _obra_social;
-	fp.open("archivo_paciente_medico_y_ultima_consulta", ios::app);
+	
+	string aux_matricula;
+	fp.open("archivo_paciente_medico_y_ultima_consulta.txt", ios::out);
 
 	if (!fp.is_open())
 	{
 		cout << "no se pudo abrir el archivo." << endl;
-		exit(1);
 	}
 	else
-	{  // -matricula_medico(cons)
-		for (int i = 0; i < cant_pac; i++)
+	{
+		for (int i = 0; i < *cant_contactos_secretaria; i++)
 		{
-			if (verificar_tiempo_10anios(list_consultas[i].fecha_turno) != true)// es < 10 años
+			for (int j = 0; j < *cant_consul; j++)
 			{
-				_nombre = list_pacientes[i].nombre;
-				_apellido = list_pacientes[i].apellido;
-				_obra_social = list_pacientes[i].obra_social;
-				for (int j = 0; j < cant_contactos; j++)
+				if (list_contactos_secretaria[i].dni_paciente == list_consultas[j].dni_pac)
 				{
-					if (list_pacientes[i].dni == list_contactos[j].dni_paciente)
-					{
-						_telefono = list_contactos[j].telefono;
-					}
-					break;
-				}
-				for (int k = 0; k < cant_consul; k++)
-				{
-					if (list_pacientes[i].dni == list_consultas[k].dni_pac)
-					{
-						_matricula_medico = list_consultas[k].matricula_med;
-					}
-					break;
+					aux_matricula = list_consultas[j].matricula_med;
 				}
 			}
 		}
-	}
 
-	fp << _nombre << "," << _apellido << "," << _telefono << "," << _matricula_medico << "," << _obra_social << endl;
+
+		for (int i = 0; i < *cant_contactos_secretaria; i++)
+		{
+			_dni_paciente = list_contactos_secretaria[i].dni_paciente;
+			_telefono_paciente = list_contactos_secretaria[i].telefono;
+			for (int j = 0; j <*cant_pac ; j++)
+			{
+				if (list_contactos_secretaria[i].dni_paciente == list_pacientes[j].dni)
+				{
+					_nombre_paciente = list_pacientes[j].nombre;
+					_apellido_paciente = list_pacientes[j].apellido;
+				}
+				for (int k = 0; k <*cant_medicos ; k++)
+				{
+					if (list_medicos[k].matricula==aux_matricula)
+					{
+						_nombre_medico = list_medicos[k].nombre;
+						_apellido_medico = list_medicos[k].apellido;
+						_telefono_medico = list_medicos[k].telefono;
+					}
+				}
+
+			}
+
+			fp << _dni_paciente << ";" << _nombre_paciente << ";" << _apellido_paciente << ";" << _telefono_paciente <<";"<<aux_matricula<< endl;//----
+		}
+	}
 	fp.close();
 }
 
-*/
+
+
+

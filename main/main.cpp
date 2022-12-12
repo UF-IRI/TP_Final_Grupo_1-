@@ -8,7 +8,7 @@
 using namespace std;
 
 int main() {
-
+       //------------------------------------ guarda la ruta a 
     string archivo_consultas = "C:\\Users\\sando\\source\\repos\\TP_Final_Grupo_1-\\data_files\\input\\IRI_Consultas.csv";
     string archivo_contactos = "C:\\Users\\sando\\source\\repos\\TP_Final_Grupo_1-\\data_files\\input\\IRI_Contactos.csv";
     string archivo_medicos = "C:\\Users\\sando\\source\\repos\\TP_Final_Grupo_1-\\data_files\\input\\IRI_Medicos.csv";
@@ -169,6 +169,10 @@ int main() {
     imprimir_archivo("contactos_de_secretaria.txt");
     cout << "fin" << endl;
 
+    delete[] list_consultas;
+    delete[] list_contactos;
+    delete[]  list_medicos;
+    delete[]  list_pacientes;
 
      return EXIT_SUCCESS;
 }
@@ -176,35 +180,3 @@ int main() {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    //-----------------------------------------------------------------------------------------------------------------------------------------------------
-    //
-
-    //crear_archivo_pacientes_medico_ultima_consulta(lista_de_pacientes,lista_de_medicos,lista_de_consultas,lista_de_contactos,cantidad_de_registros(archivo_Contactos),cantidad_de_registros(archivo_Pacientes), cantidad_de_registros(archivo_Medicos), cantidad_de_registros(archivo_Consultas));
-    //delete[] lista_de_consultas;
-    //delete[] lista_de_contactos;
-    //delete[] lista_de_medicos;
-    //delete[] lista_de_pacientes;
-    //delete[] lista_historia_clinica_irrecuperables;
-
-//    return 0;
-//}

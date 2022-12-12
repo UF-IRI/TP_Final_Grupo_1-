@@ -32,7 +32,7 @@ int main() {
 
     //----------------------------------------------------------------------------------------------------- 
      //cout << "---------------------------lista de consultas---------------------------------------------------" << endl;
-     // for (int i = 0; i < 600; i++)
+     //for (int i = 0; i < 600; i++)
      //{
      //    cout << list_consultas[i].dni_pac << " - " << list_consultas[i].fecha_solicitado.tm_mday << "/" << list_consultas[i].fecha_solicitado.tm_mon << "/" << list_consultas[i].fecha_solicitado.tm_year <<" - " << list_consultas[i].fecha_turno.tm_mday << "/" << list_consultas[i].fecha_turno.tm_mon << "/" << list_consultas[i].fecha_turno.tm_year << " - " << list_consultas[i].presento << " - " << list_consultas[i].matricula_med << endl;
      //}
@@ -96,7 +96,8 @@ int main() {
                     aux_h.estado = list_pacientes[j].estado;
                 }
             }
-            agregar_paciente_a_historia_clinica_irrecuperables(lista_historia_clinica_irrecuperables, aux_h, &cant_irrecuperables);
+            
+             agregar_paciente_a_historia_clinica_irrecuperables(lista_historia_clinica_irrecuperables, aux_h, &cant_irrecuperables);
 
         }
         else if (verificar_tiempo_10anios(list_consultas[i].fecha_turno) == false && list_consultas[i].presento == false)///  pasaron menos de 10 años y  aquellos que cumplieron 10 años pero que aun no se vennce el turno
@@ -125,36 +126,37 @@ int main() {
                         aux_h.cita_concurrida = list_consultas[i].presento;
                         aux_h.ultimo_medico = list_consultas[i].matricula_med;
                         aux_h.estado = ESTADO::fallecido;
-                        agregar_paciente_a_historia_clinica_irrecuperables(lista_historia_clinica_irrecuperables, aux_h, &cant_irrecuperables);
+                         agregar_paciente_a_historia_clinica_irrecuperables(lista_historia_clinica_irrecuperables, aux_h, &cant_irrecuperables);
                     }
                     else
                     {
-                       agregar_contacto_a_la_lista_de_secretaria(lista_a_secretaria, aux_contacto, &cant_de_contactos_secretaria);//
-                           
+                      agregar_contacto_a_la_lista_de_secretaria(lista_a_secretaria, aux_contacto, &cant_de_contactos_secretaria);//
                     }
                 }
             }
         }
     }
-    //--------------------------------------------------
+    //------------------------------------------------------------------------------------------------------------------------------
     cout << "--------------------lista de los irrecuperables--------------------------------------------------------------" << endl;
 
-  /* for (int k = 0; k < cant_irrecuperables; k++)
+   for (int k = 0; k < cant_irrecuperables; k++)
    {
        cout << lista_historia_clinica_irrecuperables[k].dni_paciente << " - " << lista_historia_clinica_irrecuperables[k].fecha_ultima_cita.tm_mday << "/" << lista_historia_clinica_irrecuperables[k].fecha_ultima_cita.tm_mon << "/" << lista_historia_clinica_irrecuperables[k].fecha_ultima_cita.tm_year << " - " << lista_historia_clinica_irrecuperables[k].cita_concurrida << " - " << lista_historia_clinica_irrecuperables[k].ultimo_medico << endl;
-   }*/
-    //------------------------------------------------
-   //cout << "--------------------lista de aquellos que no pasaron de 10 años y no fueron a la consulta que estan vivos----------------------------- " << endl;
+   }
+    //------------------------------------------------------------------------------------------------------------------
+   cout << "--------------------lista de aquellos que no pasaron de 10 años y no fueron a la consulta que estan vivos----------------------------- " << endl;
 
-   //  for (int k = 0; k < cant_de_contactos_secretaria; k++)
-   //  {
-   //      cout << lista_a_secretaria[k].dni_paciente << " - " << lista_a_secretaria[k].telefono << " - " << lista_a_secretaria[k].celular << " - " << lista_a_secretaria[k].direccion << " - " << lista_a_secretaria[k].mail << endl;
-   //  }
-   // //------------------------------------------------------------------------------------------------------------------
-   //cout << "------------------------ cargo la lista de irrecuperables y lo mando a secretaria --------------------------------------" << endl;
-   //  cargar_estructura_irrecupeables_a_archivo_irrecuperable(lista_historia_clinica_irrecuperables, &cant_irrecuperables);
-   //  cout << "---------------------------------- imprimo irrecuperabes.txt --------------------------------" << endl;
-   //  imprimir_archivo("irrecuperables.txt");
+     for (int k = 0; k < cant_de_contactos_secretaria; k++)
+     {
+         cout << lista_a_secretaria[k].dni_paciente << " - " << lista_a_secretaria[k].telefono << " - " << lista_a_secretaria[k].celular << " - " << lista_a_secretaria[k].direccion << " - " << lista_a_secretaria[k].mail << endl;
+     }
+    //------------------------------------------------------------------------------------------------------------------
+   cout << "------------------------ cargo la lista de irrecuperables y lo mando a secretaria --------------------------------------" << endl;
+     cargar_estructura_irrecupeables_a_archivo_irrecuperable(lista_historia_clinica_irrecuperables, &cant_irrecuperables);
+     cout << "---------------------------------- imprimo irrecuperabes.txt --------------------------------" << endl;
+     imprimir_archivo("irrecuperables.txt");
+    //-------------------------------------------------------------------------------------------------------------------
+
    for (int i = 0; i < cant_de_contactos_secretaria; i++)
    {
        cout << lista_a_secretaria[i].dni_paciente << endl;
@@ -169,10 +171,6 @@ int main() {
     cout << "fin" << endl;
      return EXIT_SUCCESS;
 }
-
-
-
-
 
 
 

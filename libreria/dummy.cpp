@@ -62,8 +62,12 @@ consultas_t* cargar_datos_de_un_archivo_a_una_estruct_consulta(string file,consu
 			getline(buffer, _presento, delimitador);
 
 			getline(buffer, _matricula, delimitador);
-			
-			vector[i].dni_pac = _dni;
+		
+			if (Comprobacion_dni(&_dni) == false)
+			{
+				vector[i].dni_pac = _dni;
+			}
+
 			vector[i].fecha_solicitado.tm_mday = obtener_dia(_fecha_solicitado);
 			vector[i].fecha_solicitado.tm_mon = obtener_mes(_fecha_solicitado);
 			vector[i].fecha_solicitado.tm_year = obtener_anio(_fecha_solicitado);
@@ -241,8 +245,6 @@ pacientes_t* cargar_datos_de_un_archivo_a_una_estruct_pacientes(string file, pac
 
 		getline(buffer, _obra_social, delimitador);
 
-
-
 		vector[i].dni = _dni;
 		vector[i].nombre = _nombre;
 		vector[i].apellido = _apellido;
@@ -413,22 +415,35 @@ bool verificar_tiempo_10anios(tm fecha_turno)
 	
 }
 
-void agregar_paciente_a_historia_clinica_irrecuperables(historia_clinica_t*& lista, historia_clinica_t historia_clinica_para_agregar, int* tamanio_actual)
+ void agregar_paciente_a_historia_clinica_irrecuperables(historia_clinica_t*& lista, historia_clinica_t historia_clinica_para_agregar, int* tamanio_actual)
 {
 	*tamanio_actual = *tamanio_actual + 1;
 	int i = 0;
 	historia_clinica_t* aux = new historia_clinica_t[*tamanio_actual];
-	while (i < *tamanio_actual - 1 && *tamanio_actual - 1 != 0) {
+	bool aux_verificar = verificar_lista_diferente_a_nulptr_historia_clinicas(lista);
+	if (aux_verificar==true)
+	{
+		while (i < *tamanio_actual - 1 && *tamanio_actual - 1 != 0) 
+		{
 		aux[i] = lista[i];
 		i++;
-	}
-
+		}
 	aux[i] = historia_clinica_para_agregar;
 	delete[] lista;
 	lista = aux;
-	return;
+	}
 }
-
+ bool verificar_lista_diferente_a_nulptr_historia_clinicas(historia_clinica_t*& lista)
+ {
+	 if (lista != nullptr)
+	 {
+		 return true;
+	 }
+	 else
+	 {
+		 return false;
+	 }
+ }
 
 void cargar_estructura_irrecupeables_a_archivo_irrecuperable(historia_clinica_t*& lista, int* cantidad) //agrega un paciente al archivo de irrecuperables
 {
@@ -500,16 +515,31 @@ void agregar_contacto_a_la_lista_de_secretaria(contactos_t*& lista_secretaria, c
 	int i = 0;
 	*cantidad = *cantidad + 1;
 	contactos_t* aux = new contactos_t[*cantidad];
-	while (i < *cantidad - 1 && *cantidad - 1 != 0) {
-		aux[i] = lista_secretaria[i];
-		i++;
+	bool aux_verificar = verificar_lista_diferente_a_nulptr_contactos(lista_secretaria);
+	if (aux_verificar==true)
+	{
+		while (i < *cantidad - 1 && *cantidad - 1 != 0) {
+			aux[i] = lista_secretaria[i];
+			i++;
+		}
+
+		aux[i] = aux_contacto;
+		delete[] lista_secretaria;
+		lista_secretaria = aux;
+		return;
 	}
 
-	aux[i] = aux_contacto;
-	delete[] lista_secretaria;
-	lista_secretaria = aux;
-	return;
-
+}
+bool verificar_lista_diferente_a_nulptr_contactos(contactos_t*& lista)
+{
+	if (lista != nullptr)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
 }
 void mandar_archivo_a_secretaria(int cant_consultas, int cant_pacientes, contactos_t*& lista_a_secretaria, int _cant_de_contactos_secretaria, pacientes_t*& lista_pacientes, consultas_t*& lista_consultas)
 {
@@ -662,6 +692,13 @@ void crear_archivo_pacientes_medico_ultima_consulta(pacientes_t*& list_pacientes
 		}
 	}
 	fp.close();
+}
+bool Comprobacion_dni(string* _dni)
+{
+	char* p;
+	strtol(_dni->c_str(), &p, 10);
+	return *p == 0;
+	// *p-> 0;// Devuelve 1 si son numeros y 0 si hay una letra
 }
 
 

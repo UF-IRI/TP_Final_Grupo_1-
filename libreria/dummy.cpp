@@ -29,7 +29,7 @@ consultas_t* cargar_datos_de_un_archivo_a_una_estruct_consulta(string file,consu
 	int cant = cantidad_de_registros(file);
 	
 	vector = new consultas_t[cant];
-	//consultas_t aux = {" ",{ 0,0,0,0,0,0,0,0,0 },{ 0,0,0,0,0,0,0,0,0 },false," "};
+	
 	ifstream fp;//IRI_Consultas.csv
 	fp.open(file, ios::in);
 
@@ -84,19 +84,6 @@ consultas_t* cargar_datos_de_un_archivo_a_una_estruct_consulta(string file,consu
 	return vector;
 }
 //---------------------------------------------------------------
-void agregar_consulta(consultas_t* vector, consultas_t  aux, int* tamanio) 
-{
-	/*int uno = 1;
-	consultas_t* list_aux = new consultas_t[*tamanio +uno];
-	for (int i  = 0;  i< *tamanio-1; i++)
-	{
-			list_aux[i] = vector[i];
-	}
-	list_aux[*tamanio] = aux;
-	delete[] vector;
-	vector = list_aux;
-	tamanio++;*/
-}
 
 contactos_t* cargar_datos_de_un_archivo_a_una_estruct_contactos(string file, contactos_t* vector)
 {
@@ -475,37 +462,7 @@ void imprimir_archivo(string archivo)
 	}
 	fp.close();
 }
-/*
-void cargar_datos_de_un_archivo_a_una_estruct_obra_social(string file, obra_social_t* vector)
-{
-	int cant_registros_del_archivo = 0;
-	string linea;
-	int i = 0;
-	char delimitador = ',';
-	cant_registros_del_archivo = cantidad_de_registros(file);
-	vector = new obra_social_t[cant_registros_del_archivo];
-	ifstream fp;
-	fp.open(file, ios::in);
-	if (!fp.is_open())
-	{
-		cout << "no se puede abrir el archivo obra social " << endl;
-	}
-	getline(fp, linea);
-	while (getline(fp, linea))
-	{
-		stringstream buffer(linea);
-		string _id;
-		string _obra_social;
-		getline(buffer, _id, delimitador);
-		getline(buffer, _obra_social, delimitador);
-		
-		vector[i].id_os = stoi(_id);
-		vector[i].estado_obra_social = _obra_social;
-		i++;
-	}
-	fp.close();
-}
-*/
+
 void agregar_contacto_a_la_lista_de_secretaria(contactos_t*& lista_secretaria, contactos_t aux_contacto, int* cantidad)
 {
 	int i = 0;
@@ -695,16 +652,9 @@ bool Comprobacion_dni(string const& _dni)
 		});
 
 	return !_dni.empty() && it == _dni.end();
-	/*char* p;
-	strtol(_dni.c_str(), &p, 11);
-	return *p == 0;*/
+	
 }
-//bool isNumeric(std::string const& str)
-//{
-//	char* p;
-//	strtol(str.c_str(), &p, 10);
-//	return *p == 0;
-//}
+
 
 
 

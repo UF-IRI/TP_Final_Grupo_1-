@@ -91,11 +91,12 @@ bool verificar_tiempo_10anios(tm fecha_turno);
 void agregar_contacto_a_la_lista_de_secretaria(contactos_t*& lista_secretaria, contactos_t aux_contacto, int* cantidad);
 void imprimir_archivo(string archivo);
 void mandar_archivo_a_secretaria(int cant_consultas, int cant_pacientes, contactos_t*& lista_a_secretaria,  int _cant_de_contactos_secretaria, pacientes_t*& lista_pacientes,consultas_t*& lista_consultas);
-//void cargar_datos_de_un_archivo_a_una_estruct_obra_social(string file,obra_social_t* vector);
 void crear_archivo_pacientes_medico_ultima_consulta(pacientes_t*& list_pacientes, int* cant_pac, consultas_t*& list_consultas, int* cant_consul, contactos_t*& list_contactos_secretaria, int* cant_contactos_secretaria,medicos_t*& list_medicos, int* cant_medicos);
 bool Comprobacion_dni(string const& _dni);
 bool verificar_lista_diferente_a_nulptr_contactos(contactos_t*& lista);
 bool verificar_lista_diferente_a_nulptr_historia_clinicas(historia_clinica_t*& lista);
+
+
 //------------------------------
 
 
